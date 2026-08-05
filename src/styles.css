@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-brush: "Yellowtail", cursive;
+
+  /* Identidade visual — azul real + amarelo (material de campanha) */
+  --color-background: #f5f7fc;
+  --color-foreground: #0a1f5c;
+  --color-card: #ffffff;
+  --color-card-foreground: #0a1f5c;
+  --color-primary: #0047b8;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #e8eefc;
+  --color-secondary-foreground: #0a1f5c;
+  --color-muted: #eef2fa;
+  --color-muted-foreground: #4a5d86;
+  --color-accent: #ffd100;
+  --color-accent-foreground: #003399;
+  --color-gold: #ffd100;
+  --color-gold-deep: #e6b800;
+  --color-navy: #0047b8;
+  --color-navy-deep: #001a4d;
+  --color-footer: #000d2e;
+  --color-border: #d4dff0;
+  --color-ring: #0047b8;
+  --color-destructive: #dc2626;
+  --radius-lg: 1.25rem;
+  --radius-md: 0.75rem;
+  --radius-sm: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-gold) 45%, white);
+    color: var(--color-navy-deep);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .section-pad {
+    @apply px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24;
+  }
+
+  .section-pad-tight {
+    @apply px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16;
+  }
+
+  .section-pad-loose {
+    @apply px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28;
+  }
+
+  .container-site {
+    @apply mx-auto w-full max-w-6xl;
+  }
+
+  .gold-number {
+    @apply font-sans font-extrabold tracking-tight text-gold;
+  }
+
+  .brand-sa {
+    @apply inline-flex items-center rounded-md bg-gold px-2.5 py-0.5 font-extrabold uppercase tracking-tight text-navy-deep;
+  }
+
+  .font-brush {
+    font-family: var(--font-brush);
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  /* Eyebrow editorial — sem tracking exagerado de template */
+  .section-eyebrow {
+    @apply text-sm font-semibold uppercase tracking-wide;
+  }
+
+  .section-title {
+    @apply font-display mt-2 text-3xl font-semibold tracking-tight sm:text-4xl;
+  }
+
+  /* Mosaico História — zoom in / zoom out constante e suave */
+  .mosaic-drift {
+    animation: mosaic-zoom 14s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  .mosaic-drift-b {
+    animation-duration: 16s;
+    animation-delay: -4s;
+  }
+
+  .mosaic-drift-c {
+    animation-duration: 18s;
+    animation-delay: -8s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mosaic-drift,
+    .mosaic-drift-b,
+    .mosaic-drift-c {
+      animation: none;
+      transform: scale(1.1);
+    }
+  }
+}
+
+@keyframes mosaic-zoom {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1.18);
+  }
+}
