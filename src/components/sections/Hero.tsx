@@ -1,6 +1,6 @@
 import { motion } from 'motion/react'
 import { toast } from 'sonner'
-import { config, hasWhatsApp, whatsappUrl } from '@/lib/config'
+import { config } from '@/lib/config'
 import {
   FacebookIcon,
   FlickrIcon,
@@ -15,9 +15,9 @@ const easeOut = [0.22, 1, 0.36, 1] as const
 const heroSocials = [
   {
     nome: 'WhatsApp',
-    url: () => whatsappUrl() ?? '',
+    url: () => config.social.whatsapp,
     icon: WhatsAppIcon,
-    ready: () => hasWhatsApp(),
+    ready: () => Boolean(config.social.whatsapp),
   },
   {
     nome: 'Instagram',

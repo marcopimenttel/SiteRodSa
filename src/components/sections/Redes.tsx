@@ -6,10 +6,17 @@ import {
   FlickrIcon,
   InstagramIcon,
   TikTokIcon,
+  WhatsAppIcon,
   XIcon,
 } from '@/components/icons/SocialIcons'
 
 const redes = [
+  {
+    nome: 'WhatsApp',
+    url: config.social.whatsapp,
+    icon: WhatsAppIcon,
+    handle: 'Canal oficial',
+  },
   {
     nome: 'Instagram',
     url: config.social.instagram,
@@ -26,13 +33,13 @@ const redes = [
     nome: 'X',
     url: config.social.x,
     icon: XIcon,
-    handle: 'Em breve',
+    handle: '@DelRodrigoSa',
   },
   {
     nome: 'TikTok',
     url: config.social.tiktok,
     icon: TikTokIcon,
-    handle: 'Em breve',
+    handle: '@delegadorodrigosa',
   },
   {
     nome: 'Flickr',

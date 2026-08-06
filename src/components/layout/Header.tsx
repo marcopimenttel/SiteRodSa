@@ -79,7 +79,8 @@ export function Header() {
                 </a>
               ))}
               <div className="mt-2 px-1">
-                <WhatsAppButton className="w-full" />
+                {/* Business da campanha — número ainda em breve */}
+                <WhatsAppButton className="w-full" mode="business" label="Fale Comigo" />
               </div>
             </nav>
           </motion.div>

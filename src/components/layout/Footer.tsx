@@ -8,14 +8,14 @@ import {
   WhatsAppIcon,
   XIcon,
 } from '@/components/icons/SocialIcons'
-import { config, hasWhatsApp, whatsappUrl } from '@/lib/config'
+import { config } from '@/lib/config'
 
 const footerSocials = [
   {
     nome: 'WhatsApp',
-    url: () => whatsappUrl() ?? '',
+    url: () => config.social.whatsapp,
     icon: WhatsAppIcon,
-    ready: () => hasWhatsApp(),
+    ready: () => Boolean(config.social.whatsapp),
   },
   {
     nome: 'Instagram',

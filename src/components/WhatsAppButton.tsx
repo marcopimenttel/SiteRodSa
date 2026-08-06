@@ -1,20 +1,43 @@
 import { MessageCircle } from 'lucide-react'
 import { toast } from 'sonner'
-import { hasWhatsApp, whatsappUrl } from '@/lib/config'
+import {
+  hasWhatsAppChannel,
+  whatsappBusinessUrl,
+  whatsappChannelUrl,
+} from '@/lib/config'
 import { cn } from '@/lib/utils'
 
 type Props = {
   className?: string
   floating?: boolean
   label?: string
+  /** channel = canal oficial | business = WhatsApp Business (menu) */
+  mode?: 'channel' | 'business'
 }
 
-export function WhatsAppButton({ className, floating = false, label = 'Fale Comigo' }: Props) {
+export function WhatsAppButton({
+  className,
+  floating = false,
+  label = 'Fale Comigo',
+  mode,
+}: Props) {
+  const resolvedMode = mode ?? (floating ? 'channel' : 'business')
+
   const handleClick = () => {
-    const url = whatsappUrl()
+    if (resolvedMode === 'channel') {
+      const url = whatsappChannelUrl()
+      if (!url) {
+        toast.message('WhatsApp em breve')
+        return
+      }
+      window.open(url, '_blank', 'noopener,noreferrer')
+      return
+    }
+
+    const url = whatsappBusinessUrl()
     if (!url) {
       toast.message('WhatsApp em breve', {
-        description: 'O número oficial da campanha será divulgado em breve.',
+        description: 'O número oficial da campanha (WhatsApp Business) será divulgado em breve.',
       })
       return
     }
@@ -26,10 +49,10 @@ export function WhatsAppButton({ className, floating = false, label = 'Fale Comi
       <button
         type="button"
         onClick={handleClick}
-        aria-label="WhatsApp da campanha"
+        aria-label="Canal oficial no WhatsApp"
         className={cn(
           'fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105 hover:bg-[#1ebe57] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-          !hasWhatsApp() && 'opacity-90',
+          !hasWhatsAppChannel() && 'opacity-90',
           className,
         )}
       >
