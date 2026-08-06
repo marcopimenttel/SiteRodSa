@@ -20,7 +20,7 @@ export function Header() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-0 bg-[#021c4f]/90 backdrop-blur-md">
-      <div className="container-site relative flex h-14 items-center justify-between gap-4 lg:h-20">
+      <div className="container-site relative flex h-14 items-center justify-between gap-4 px-4 sm:px-6 lg:h-20 lg:px-8">
         <Link to="/" className="relative z-10 flex min-w-0 items-center gap-3 text-white">
           <BrandLogo
             variant="branco"
@@ -41,15 +41,19 @@ export function Header() {
           ))}
         </nav>
 
-        {/* Mobile: só ícone do menu (maior) */}
+        {/* Mobile: toggle maior e afastado da borda */}
         <Button
           variant="ghost"
           size="icon"
-          className="relative z-10 h-11 w-11 text-white hover:bg-white/10 lg:hidden"
+          className="relative z-10 mr-1 h-12 w-12 shrink-0 text-white hover:bg-white/10 lg:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? 'Fechar menu' : 'Abrir menu'}
         >
-          {open ? <X className="h-8 w-8" strokeWidth={2.25} /> : <Menu className="h-8 w-8" strokeWidth={2.25} />}
+          {open ? (
+            <X className="h-9 w-9" strokeWidth={2.5} />
+          ) : (
+            <Menu className="h-9 w-9" strokeWidth={2.5} />
+          )}
         </Button>
       </div>
 
