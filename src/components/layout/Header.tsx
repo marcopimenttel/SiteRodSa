@@ -41,19 +41,16 @@ export function Header() {
           ))}
         </nav>
 
-        {/* Mobile: só WhatsApp + menu */}
-        <div className="relative z-10 flex items-center gap-1 lg:hidden">
-          <WhatsAppButton label="WhatsApp" className="h-9 px-3 text-xs" />
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-white hover:bg-white/10"
-            onClick={() => setOpen((v) => !v)}
-            aria-label={open ? 'Fechar menu' : 'Abrir menu'}
-          >
-            {open ? <X /> : <Menu />}
-          </Button>
-        </div>
+        {/* Mobile: só ícone do menu (maior) */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="relative z-10 h-11 w-11 text-white hover:bg-white/10 lg:hidden"
+          onClick={() => setOpen((v) => !v)}
+          aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+        >
+          {open ? <X className="h-8 w-8" strokeWidth={2.25} /> : <Menu className="h-8 w-8" strokeWidth={2.25} />}
+        </Button>
       </div>
 
       <AnimatePresence>
@@ -77,6 +74,9 @@ export function Header() {
                   {link.label}
                 </a>
               ))}
+              <div className="mt-2 px-1">
+                <WhatsAppButton className="w-full" />
+              </div>
             </nav>
           </motion.div>
         )}

@@ -125,7 +125,7 @@ export function Hero() {
       </motion.div>
 
       {/* Conteúdo tipográfico */}
-      <div className="relative z-10 order-first mx-auto flex w-full max-w-[1400px] flex-1 items-start px-4 pb-2 pt-16 sm:px-6 lg:min-h-[100svh] lg:items-center lg:px-8 lg:pb-16 lg:pt-20">
+      <div className="relative z-10 order-first mx-auto flex w-full max-w-[1400px] flex-1 items-start px-4 pb-2 pt-14 sm:px-6 lg:min-h-[100svh] lg:items-center lg:px-8 lg:pb-16 lg:pt-20">
         <div className="w-full max-w-xl lg:max-w-[48%]">
           {/* Marca nome + número — entrada + leve pulso contínuo */}
           <motion.div
@@ -149,11 +149,12 @@ export function Hero() {
             />
           </motion.div>
 
+          {/* SA-04 slogan — no mobile sobe (perto do número) */}
           <motion.div
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.18, ease: easeOut }}
-            className="mt-1 sm:mt-2 lg:mt-5"
+            className="-mt-1 sm:mt-1 lg:mt-5"
           >
             <img
               src="/images/hero-slogan.svg"
@@ -162,11 +163,12 @@ export function Hero() {
             />
           </motion.div>
 
+          {/* Redes — no mobile sobem junto, com folga acima da foto */}
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.35, ease: easeOut }}
-            className="mt-3 flex flex-wrap items-center justify-center gap-3 sm:gap-4 lg:mt-8 lg:justify-start"
+            className="mt-2 mb-6 flex flex-wrap items-center justify-center gap-2.5 sm:mt-3 sm:mb-0 sm:gap-4 lg:mt-8 lg:justify-start"
           >
             {heroSocials.map((rede) => {
               const Icon = rede.icon
@@ -186,9 +188,9 @@ export function Hero() {
                       toast.message(`${rede.nome} em breve`)
                     }
                   }}
-                  className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:scale-110 hover:border-[#fdb814] hover:bg-[#fdb814] hover:text-[#021c4f] sm:h-14 sm:w-14"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:scale-110 hover:border-[#fdb814] hover:bg-[#fdb814] hover:text-[#021c4f] sm:h-14 sm:w-14"
                 >
-                  <Icon className="h-6 w-6 sm:h-7 sm:w-7" />
+                  <Icon className="h-5 w-5 sm:h-7 sm:w-7" />
                 </a>
               )
             })}
