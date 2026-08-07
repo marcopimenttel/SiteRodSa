@@ -141,6 +141,15 @@
       animation: none;
       transform: scale(1.1);
     }
+
+    .hero-name-rail,
+    .hero-name-item {
+      animation: none !important;
+    }
+
+    .hero-name-item {
+      opacity: 0.1;
+    }
   }
 }
 
@@ -150,5 +159,54 @@
   }
   to {
     transform: scale(1.18);
+  }
+}
+
+/* Hero — coluna do nome contorno (sobe/desce + fade) */
+.hero-name-mask {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 18%,
+    black 82%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 18%,
+    black 82%,
+    transparent 100%
+  );
+}
+
+.hero-name-rail {
+  animation: hero-name-drift 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.hero-name-item {
+  opacity: 0.07;
+  animation: hero-name-pulse 3.6s ease-in-out infinite;
+  will-change: opacity;
+}
+
+@keyframes hero-name-drift {
+  from {
+    transform: translate3d(0, 10%, 0);
+  }
+  to {
+    transform: translate3d(0, -18%, 0);
+  }
+}
+
+@keyframes hero-name-pulse {
+  0%,
+  100% {
+    opacity: 0.04;
+  }
+  45%,
+  55% {
+    opacity: 0.16;
   }
 }

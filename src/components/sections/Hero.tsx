@@ -1,6 +1,7 @@
 import { motion } from 'motion/react'
 import { toast } from 'sonner'
 import { config } from '@/lib/config'
+import { HeroNameBackdrop } from '@/components/HeroNameBackdrop'
 import {
   FacebookIcon,
   FlickrIcon,
@@ -100,6 +101,9 @@ export function Hero() {
           }}
         />
       </div>
+
+      {/* Nome contorno — atrás da foto e do conteúdo */}
+      <HeroNameBackdrop />
 
       {/*
         AJUSTES DA FOTO (desktop — prefixo lg:):
