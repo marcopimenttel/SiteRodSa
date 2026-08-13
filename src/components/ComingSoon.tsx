@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
+import { HeroNameBackdrop } from '@/components/HeroNameBackdrop'
 import {
   CAMPAIGN_DIGITS,
   getCountdown,
@@ -52,43 +53,66 @@ export function ComingSoon({ onLaunch }: ComingSoonProps) {
   ]
 
   return (
-    <div className="relative flex min-h-[100svh] flex-col overflow-hidden bg-[#021c4f] text-white">
-      <div aria-hidden className="pointer-events-none absolute inset-0">
+    <div
+      className="relative flex min-h-[100svh] flex-col overflow-hidden text-white lg:block"
+      style={{ backgroundColor: '#021c4f' }}
+    >
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
         <div
           className="absolute inset-0"
           style={{
             background: `
-              radial-gradient(ellipse 70% 55% at 78% 42%, rgba(55, 110, 200, 0.32) 0%, transparent 58%),
-              radial-gradient(ellipse 50% 40% at 20% 80%, rgba(8, 40, 110, 0.65) 0%, transparent 55%),
+              radial-gradient(ellipse 70% 55% at 78% 42%, rgba(55, 110, 200, 0.35) 0%, transparent 58%),
+              radial-gradient(ellipse 55% 45% at 18% 70%, rgba(8, 40, 110, 0.7) 0%, transparent 55%),
+              radial-gradient(ellipse 40% 35% at 55% 15%, rgba(253, 184, 20, 0.08) 0%, transparent 50%),
               radial-gradient(circle at 50% 50%, #042a6e 0%, #021c4f 55%, #011233 100%)
             `,
           }}
         />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-1 flex-col items-center justify-center gap-8 px-5 py-10 sm:gap-10 sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:gap-10 lg:pb-0 lg:pt-12">
+      <HeroNameBackdrop />
+
+      {/* Foto — mesmo tamanho/posição do Hero */}
+      <motion.div
+        initial={{ opacity: 0, x: 40 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.9, delay: 0.2, ease: easeOut }}
+        className="pointer-events-none relative order-last z-[1] mt-auto w-full max-lg:mx-auto max-lg:flex max-lg:w-[115%] max-lg:max-w-none max-lg:items-end max-lg:justify-center lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:w-[56%]"
+      >
+        <img
+          src="/images/hero-foto.png?v=3"
+          alt="Rodrigo Sá"
+          className="relative z-10 mx-auto h-auto w-full max-w-[520px] scale-110 object-contain object-bottom sm:max-w-[560px] lg:mx-0 lg:h-full lg:max-w-none lg:w-full lg:origin-bottom lg:translate-y-[10%] lg:scale-100 lg:object-cover lg:object-[center_8%]"
+          fetchPriority="high"
+        />
+      </motion.div>
+
+      <div className="relative z-10 order-first mx-auto flex w-full max-w-[1400px] flex-1 items-start px-4 pb-2 pt-16 sm:px-6 lg:min-h-[100svh] lg:items-center lg:px-8 lg:pb-16 lg:pt-20">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: easeOut }}
-          className="w-full max-w-xl text-center lg:max-w-[52%] lg:pb-16 lg:text-left"
+          transition={{ duration: 0.75, ease: easeOut }}
+          className="w-full max-w-xl lg:max-w-[48%]"
         >
-          <h1 className="font-brush text-6xl leading-none tracking-wide text-white sm:text-7xl lg:text-8xl xl:text-9xl">
+          <h1 className="font-inter text-5xl font-black uppercase italic leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl xl:text-8xl">
             Rodrigo{' '}
             <span className="text-[#fdb814]">Sá</span>
           </h1>
-          <p className="mt-5 text-lg font-medium leading-relaxed text-white/75 sm:text-xl lg:text-2xl">
-            Em breve, uma nova etapa pelo Amazonas.
+
+          <p className="mt-5 max-w-lg text-base font-medium leading-relaxed text-white/75 sm:text-lg">
+            Em breve, você vai descobrir abaixo os 5 números, para uma nova
+            etapa pelo Amazonas.
           </p>
 
           <div
-            className="mt-10 flex justify-center gap-3 sm:gap-4 lg:justify-start"
+            className="mt-8 flex flex-wrap justify-center gap-2.5 sm:mt-10 sm:gap-3 lg:justify-start"
             aria-label="Número da campanha será revelado em breve"
           >
             {CAMPAIGN_DIGITS.map((digit, i) => (
               <div
                 key={i}
-                className="flex h-20 w-14 items-center justify-center rounded-2xl border-2 border-white/30 bg-white/[0.07] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)] sm:h-24 sm:w-16 lg:h-28 lg:w-20"
+                className="flex h-[4.75rem] w-[3.35rem] items-center justify-center rounded-xl border-2 border-white/30 bg-white/[0.07] sm:h-24 sm:w-[4.25rem] lg:h-28 lg:w-20"
               >
                 <AnimatePresence mode="wait">
                   {revealing ? (
@@ -101,7 +125,7 @@ export function ComingSoon({ onLaunch }: ComingSoonProps) {
                         duration: 0.35,
                         ease: easeOut,
                       }}
-                      className="font-sans text-4xl font-extrabold tabular-nums text-[#fdb814] sm:text-5xl lg:text-6xl"
+                      className="font-inter text-4xl font-black tabular-nums text-[#fdb814] sm:text-5xl lg:text-6xl"
                     >
                       {digit}
                     </motion.span>
@@ -109,7 +133,7 @@ export function ComingSoon({ onLaunch }: ComingSoonProps) {
                     <motion.span
                       key={`empty-${i}`}
                       exit={{ opacity: 0 }}
-                      className="block h-3 w-3 rounded-full bg-white/35 sm:h-3.5 sm:w-3.5"
+                      className="block h-3 w-3 rounded-full bg-white/35"
                     />
                   )}
                 </AnimatePresence>
@@ -118,16 +142,16 @@ export function ComingSoon({ onLaunch }: ComingSoonProps) {
           </div>
 
           {!revealing && (
-            <div className="mt-10 grid grid-cols-4 gap-3 sm:gap-4">
+            <div className="mt-8 grid max-w-lg grid-cols-4 gap-2.5 sm:mt-10 sm:gap-3">
               {units.map((unit) => (
                 <div
                   key={unit.label}
-                  className="rounded-2xl border border-white/15 bg-white/[0.06] px-2 py-4 text-center sm:px-3 sm:py-5 lg:py-6"
+                  className="rounded-xl border border-white/15 bg-white/[0.06] px-1.5 py-3 text-center sm:px-2 sm:py-4"
                 >
-                  <p className="font-sans text-3xl font-extrabold tabular-nums tracking-tight text-white sm:text-4xl lg:text-5xl">
+                  <p className="font-inter text-2xl font-black tabular-nums tracking-tight text-white sm:text-3xl lg:text-4xl">
                     {unit.value}
                   </p>
-                  <p className="mt-2 text-xs font-bold uppercase tracking-[0.14em] text-white/50 sm:text-sm">
+                  <p className="mt-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white/50 sm:text-xs">
                     {unit.label}
                   </p>
                 </div>
@@ -145,20 +169,6 @@ export function ComingSoon({ onLaunch }: ComingSoonProps) {
               A campanha começa agora.
             </motion.p>
           )}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 28 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, delay: 0.15, ease: easeOut }}
-          className="pointer-events-none relative w-full max-w-[460px] lg:max-w-[46%]"
-        >
-          <img
-            src="/images/hero-foto.png?v=3"
-            alt="Rodrigo Sá"
-            className="mx-auto h-auto w-full object-contain object-bottom drop-shadow-2xl"
-            fetchPriority="high"
-          />
         </motion.div>
       </div>
     </div>
