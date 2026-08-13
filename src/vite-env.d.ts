@@ -9,6 +9,7 @@ interface ImportMetaEnv {
   readonly VITE_X_URL: string
   readonly VITE_TIKTOK_URL: string
   readonly VITE_FLICKR_URL: string
+  readonly VITE_LAUNCH_GATE?: string
 }
 
 interface ImportMeta {

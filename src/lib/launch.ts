@@ -3,8 +3,30 @@ export const LAUNCH_AT = new Date('2026-08-16T00:01:00-04:00')
 
 export const CAMPAIGN_DIGITS = ['1', '1', '1', '1', '1'] as const
 
+const LAUNCH_HOSTS = new Set(['rodrigosa.com.br', 'www.rodrigosa.com.br'])
+
+/**
+ * Contagem / página de espera só no domínio oficial.
+ * Vercel, localhost e URLs temporárias ficam com o site completo.
+ * Override: VITE_LAUNCH_GATE=true|false
+ */
+export function shouldEnforceLaunchGate(): boolean {
+  const flag = import.meta.env.VITE_LAUNCH_GATE
+  if (flag === 'false') return false
+  if (flag === 'true') return true
+
+  if (typeof window === 'undefined') return false
+  return LAUNCH_HOSTS.has(window.location.hostname)
+}
+
 export function isLaunched(now: Date = new Date()): boolean {
   return now.getTime() >= LAUNCH_AT.getTime()
+}
+
+/** Site completo liberado (já passou da data OU gate não se aplica neste host). */
+export function canShowFullSite(now: Date = new Date()): boolean {
+  if (!shouldEnforceLaunchGate()) return true
+  return isLaunched(now)
 }
 
 export type CountdownParts = {

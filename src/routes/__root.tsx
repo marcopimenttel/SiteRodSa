@@ -6,14 +6,14 @@ import { Footer } from '@/components/layout/Footer'
 import { CookieBanner } from '@/components/CookieBanner'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { ComingSoon } from '@/components/ComingSoon'
-import { isLaunched } from '@/lib/launch'
+import { canShowFullSite, isLaunched } from '@/lib/launch'
 
 export const Route = createRootRoute({
   component: RootLayout,
 })
 
 function RootLayout() {
-  const [launched, setLaunched] = useState(() => isLaunched())
+  const [launched, setLaunched] = useState(() => canShowFullSite())
 
   useEffect(() => {
     if (launched) return
