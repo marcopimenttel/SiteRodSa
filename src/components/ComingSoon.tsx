@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import { HeroNameBackdrop } from '@/components/HeroNameBackdrop'
 import {
   CAMPAIGN_DIGITS,
   getCountdown,
@@ -70,8 +69,6 @@ export function ComingSoon({ onLaunch }: ComingSoonProps) {
           }}
         />
       </div>
-
-      <HeroNameBackdrop />
 
       {/* Foto — mesmo tamanho/posição do Hero */}
       <motion.div
