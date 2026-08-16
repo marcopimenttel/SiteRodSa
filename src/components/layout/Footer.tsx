@@ -113,6 +113,19 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/10">
+        <div className="container-site px-4 py-5 sm:px-6 lg:px-8">
+          <div className="rounded-lg border border-[#fdb814]/35 bg-[#fdb814]/10 px-4 py-3 text-center sm:px-5 sm:text-left">
+            <p className="text-xs font-bold uppercase tracking-wide text-[#fdb814] sm:text-sm">
+              Propaganda Eleitoral — Federação União Progressista
+            </p>
+            <p className="mt-1 text-xs text-white/85 sm:text-sm">
+              CNPJ do candidato: <span className="font-semibold text-white">68.468.441/0001-56</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t border-white/10">
         <div className="container-site flex flex-col gap-2 px-4 py-6 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
           <p>
             Material de campanha eleitoral. Prestação de contas: link do TSE quando disponível.
