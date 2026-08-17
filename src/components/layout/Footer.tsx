@@ -8,7 +8,7 @@ import {
   WhatsAppIcon,
   XIcon,
 } from '@/components/icons/SocialIcons'
-import { config } from '@/lib/config'
+import { config, whatsappBusinessUrl } from '@/lib/config'
 
 const footerSocials = [
   {
@@ -67,6 +67,16 @@ export function Footer() {
         <div>
           <p className="text-sm font-semibold uppercase tracking-wider text-gold">Contato</p>
           <ul className="mt-3 space-y-2 text-sm text-white/75">
+            <li>
+              <a
+                href={whatsappBusinessUrl() ?? undefined}
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-white"
+              >
+                {config.whatsappDisplay}
+              </a>
+            </li>
             <li>
               <a href={`mailto:${config.contactEmail}`} className="hover:text-white">
                 {config.contactEmail}

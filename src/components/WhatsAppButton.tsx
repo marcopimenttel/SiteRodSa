@@ -1,7 +1,7 @@
 import { MessageCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import {
-  hasWhatsAppChannel,
+  hasWhatsAppBusiness,
   whatsappBusinessUrl,
   whatsappChannelUrl,
 } from '@/lib/config'
@@ -11,7 +11,7 @@ type Props = {
   className?: string
   floating?: boolean
   label?: string
-  /** channel = canal oficial | business = WhatsApp Business (menu) */
+  /** channel = canal oficial | business = número WhatsApp */
   mode?: 'channel' | 'business'
 }
 
@@ -21,7 +21,8 @@ export function WhatsAppButton({
   label = 'Fale Comigo',
   mode,
 }: Props) {
-  const resolvedMode = mode ?? (floating ? 'channel' : 'business')
+  // Flutuante e menu usam o número; channel só quando pedido explicitamente
+  const resolvedMode = mode ?? 'business'
 
   const handleClick = () => {
     if (resolvedMode === 'channel') {
@@ -37,7 +38,7 @@ export function WhatsAppButton({
     const url = whatsappBusinessUrl()
     if (!url) {
       toast.message('WhatsApp em breve', {
-        description: 'O número oficial da campanha (WhatsApp Business) será divulgado em breve.',
+        description: 'O número oficial da campanha será divulgado em breve.',
       })
       return
     }
@@ -49,10 +50,10 @@ export function WhatsAppButton({
       <button
         type="button"
         onClick={handleClick}
-        aria-label="Canal oficial no WhatsApp"
+        aria-label="Falar no WhatsApp"
         className={cn(
           'fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105 hover:bg-[#1ebe57] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-          !hasWhatsAppChannel() && 'opacity-90',
+          !hasWhatsAppBusiness() && 'opacity-90',
           className,
         )}
       >
