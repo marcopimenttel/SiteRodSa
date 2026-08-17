@@ -3,6 +3,7 @@ import { Link } from '@tanstack/react-router'
 import { Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
 import { BrandLogo } from '@/components/BrandLogo'
+import { MoldurasCta } from '@/components/MoldurasCta'
 import { Button } from '@/components/ui/button'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { cn } from '@/lib/utils'
@@ -20,41 +21,46 @@ export function Header() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-0 bg-[#021c4f]/90 backdrop-blur-md">
-      <div className="container-site relative flex h-14 items-center justify-between gap-4 px-4 sm:px-6 lg:h-20 lg:px-8">
+      <div className="container-site relative flex h-14 items-center justify-between gap-3 px-4 sm:px-6 lg:h-20 lg:px-8">
         <Link to="/" className="relative z-10 flex min-w-0 items-center gap-3 text-white">
           <BrandLogo
             variant="branco"
             priority
-            className="h-9 w-auto max-w-[220px] sm:h-11 sm:max-w-[280px] lg:h-14 lg:max-w-[400px]"
+            className="h-9 w-auto max-w-[180px] sm:h-11 sm:max-w-[240px] lg:h-14 lg:max-w-[320px]"
           />
         </Link>
 
-        <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-1 lg:flex">
+        <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-0.5 lg:flex">
           {links.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="rounded-md px-3 py-2 text-sm font-medium text-white/85 transition hover:bg-white/10 hover:text-white"
+              className="rounded-md px-2.5 py-2 text-sm font-medium text-white/85 transition hover:bg-white/10 hover:text-white xl:px-3"
             >
               {link.label}
             </a>
           ))}
         </nav>
 
-        {/* Mobile: toggle maior e afastado da borda */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="relative z-10 mr-1 h-12 w-12 shrink-0 text-white hover:bg-white/10 lg:hidden"
-          onClick={() => setOpen((v) => !v)}
-          aria-label={open ? 'Fechar menu' : 'Abrir menu'}
-        >
-          {open ? (
-            <X className="h-9 w-9" strokeWidth={2.5} />
-          ) : (
-            <Menu className="h-9 w-9" strokeWidth={2.5} />
-          )}
-        </Button>
+        <div className="relative z-10 flex shrink-0 items-center gap-2">
+          <MoldurasCta
+            size="sm"
+            className="hidden max-w-[220px] truncate sm:inline-flex lg:max-w-none"
+          />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-12 w-12 shrink-0 text-white hover:bg-white/10 lg:hidden"
+            onClick={() => setOpen((v) => !v)}
+            aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+          >
+            {open ? (
+              <X className="h-9 w-9" strokeWidth={2.5} />
+            ) : (
+              <Menu className="h-9 w-9" strokeWidth={2.5} />
+            )}
+          </Button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -78,8 +84,8 @@ export function Header() {
                   {link.label}
                 </a>
               ))}
-              <div className="mt-2 px-1">
-                {/* Business da campanha — número ainda em breve */}
+              <div className="mt-2 space-y-2 px-1">
+                <MoldurasCta fullWidth />
                 <WhatsAppButton className="w-full" mode="business" label="Fale Comigo" />
               </div>
             </nav>

@@ -8,6 +8,7 @@ import {
   WhatsAppIcon,
   XIcon,
 } from '@/components/icons/SocialIcons'
+import { MoldurasCta } from '@/components/MoldurasCta'
 import { config, whatsappBusinessUrl } from '@/lib/config'
 
 const footerSocials = [
@@ -62,6 +63,9 @@ export function Footer() {
           <p className="mt-4 max-w-sm text-sm text-white/70">
             {config.slogan}. Material de campanha eleitoral para Deputado Estadual do Amazonas.
           </p>
+          <div className="mt-5">
+            <MoldurasCta />
+          </div>
         </div>
 
         <div>

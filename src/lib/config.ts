@@ -7,6 +7,9 @@ export const config = {
   role: 'Candidato a Deputado Estadual',
   slogan: 'O nosso estado merece essa vitória',
   contactEmail: (env.VITE_CONTACT_EMAIL as string) || 'contato@rodrigosa.com.br',
+  /** Molduras digitais (eu.apoio) */
+  moldurasUrl:
+    (env.VITE_MOLDURAS_URL as string) || 'https://app.euapoio.cloud/c/rodrigosa',
   /** Exibição do WhatsApp (rodapé) */
   whatsappDisplay: '(92) 98147-7787',
   /** WhatsApp da campanha — DDI+DDD, só números */

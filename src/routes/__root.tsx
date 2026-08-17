@@ -6,6 +6,7 @@ import { Footer } from '@/components/layout/Footer'
 import { CookieBanner } from '@/components/CookieBanner'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { ComingSoon } from '@/components/ComingSoon'
+import { MoldurasPopup } from '@/components/MoldurasPopup'
 import { canShowFullSite, isLaunched } from '@/lib/launch'
 
 export const Route = createRootRoute({
@@ -45,6 +46,7 @@ function RootLayout() {
       </main>
       <Footer />
       <WhatsAppButton floating />
+      <MoldurasPopup />
       <CookieBanner />
       <Toaster position="top-center" richColors closeButton />
     </div>
