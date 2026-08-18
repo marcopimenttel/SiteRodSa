@@ -3,6 +3,7 @@ import { toast } from 'sonner'
 import { formasAjuda } from '@/data/noticias'
 import { config } from '@/lib/config'
 import { Reveal } from '@/components/Reveal'
+import { MoldurasCta } from '@/components/MoldurasCta'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
@@ -63,6 +64,9 @@ export function Apoiador() {
               Junte-se à campanha Rodrigo Sá {config.ballotNumber}. Sua ajuda faz a diferença em
               cada bairro e município do Amazonas.
             </p>
+            <div className="mt-6">
+              <MoldurasCta />
+            </div>
           </div>
         </Reveal>
 
