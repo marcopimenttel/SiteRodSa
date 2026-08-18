@@ -3,12 +3,13 @@ import { toast } from 'sonner'
 import { formasAjuda } from '@/data/noticias'
 import { config } from '@/lib/config'
 import { api } from '@/lib/api'
-import { formatPhoneMask, isValidPhoneMask } from '@/lib/phone'
+import { isValidPhoneMask } from '@/lib/phone'
 import { Reveal } from '@/components/Reveal'
 import { MoldurasCta } from '@/components/MoldurasCta'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
+import { PhoneInput } from '@/components/ui/phone-input'
 import { Label } from '@/components/ui/label'
 
 export function Apoiador() {
@@ -96,13 +97,11 @@ export function Apoiador() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="whatsapp">WhatsApp</Label>
-                <Input
+                <PhoneInput
                   id="whatsapp"
                   value={whatsapp}
-                  onChange={(e) => setWhatsapp(formatPhoneMask(e.target.value))}
+                  onValueChange={setWhatsapp}
                   placeholder="(92) 99999-9999"
-                  inputMode="tel"
-                  autoComplete="tel"
                   required
                 />
               </div>
