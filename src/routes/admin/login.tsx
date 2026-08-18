@@ -4,7 +4,6 @@ import { motion } from 'motion/react'
 import { toast } from 'sonner'
 import { api, setAdminToken } from '@/lib/api'
 import { config } from '@/lib/config'
-import { BrandLogo } from '@/components/BrandLogo'
 import { HeroNameBackdrop } from '@/components/HeroNameBackdrop'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -223,11 +222,6 @@ function AdminLoginPage() {
             transition={{ duration: 0.7, delay: 0.45, ease: easeOut }}
             className="w-full max-w-md rounded-2xl border border-white/15 bg-white p-5 text-navy-deep shadow-2xl sm:p-7"
           >
-            <BrandLogo
-              variant="azul"
-              className="mb-4 h-9 w-auto max-w-[220px] object-contain object-left"
-              priority
-            />
             <p className="text-xs font-bold uppercase tracking-wider text-[#021c4f]/70">
               Admin
             </p>
