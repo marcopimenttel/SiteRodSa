@@ -3,6 +3,7 @@ import { toast } from 'sonner'
 import { formasAjuda } from '@/data/noticias'
 import { config } from '@/lib/config'
 import { api } from '@/lib/api'
+import { formatPhoneMask, isValidPhoneMask } from '@/lib/phone'
 import { Reveal } from '@/components/Reveal'
 import { MoldurasCta } from '@/components/MoldurasCta'
 import { Button } from '@/components/ui/button'
@@ -24,6 +25,10 @@ export function Apoiador() {
     e.preventDefault()
     if (!nome.trim() || !whatsapp.trim() || !cidade.trim()) {
       toast.error('Preencha nome, WhatsApp e cidade/bairro.')
+      return
+    }
+    if (!isValidPhoneMask(whatsapp)) {
+      toast.error('Informe um WhatsApp válido: (99) 99999-9999')
       return
     }
     if (ajudas.length === 0) {
@@ -94,8 +99,10 @@ export function Apoiador() {
                 <Input
                   id="whatsapp"
                   value={whatsapp}
-                  onChange={(e) => setWhatsapp(e.target.value)}
+                  onChange={(e) => setWhatsapp(formatPhoneMask(e.target.value))}
                   placeholder="(92) 99999-9999"
+                  inputMode="tel"
+                  autoComplete="tel"
                   required
                 />
               </div>

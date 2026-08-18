@@ -9,9 +9,10 @@ import {
   type AdminStats,
   type ApoiadorRow,
 } from '@/lib/api'
+import { AdminModal, ConfirmModal } from '@/components/admin/AdminModal'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { PasswordInput } from '@/components/ui/password-input'
 import { cn } from '@/lib/utils'
 
 export const Route = createFileRoute('/admin/')({
@@ -30,6 +31,8 @@ function AdminDashboardPage() {
   const [rows, setRows] = useState<ApoiadorRow[]>([])
   const [filter, setFilter] = useState('todos')
   const [selected, setSelected] = useState<ApoiadorRow | null>(null)
+  const [deleteTarget, setDeleteTarget] = useState<ApoiadorRow | null>(null)
+  const [deleting, setDeleting] = useState(false)
   const [loading, setLoading] = useState(true)
   const [currentPassword, setCurrentPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
@@ -89,6 +92,22 @@ function AdminDashboardPage() {
     }
   }
 
+  const confirmDelete = async () => {
+    if (!deleteTarget) return
+    setDeleting(true)
+    try {
+      await api.deleteApoiador(deleteTarget.id)
+      toast.success('Excluído')
+      if (selected?.id === deleteTarget.id) setSelected(null)
+      setDeleteTarget(null)
+      await load()
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Erro')
+    } finally {
+      setDeleting(false)
+    }
+  }
+
   const filteredLabel = useMemo(() => {
     if (filter === 'todos') return 'Todos'
     return statusLabel[filter as ApoiadorRow['status']] || filter
@@ -119,7 +138,10 @@ function AdminDashboardPage() {
         <StatCard label="Visitas únicas" value={stats?.uniqueViews ?? '—'} highlight />
         <StatCard label="Acessos totais" value={stats?.totalHits ?? '—'} />
         <StatCard label="Apoiadores" value={stats?.apoiadores ?? '—'} />
-        <StatCard label="Novos / Contatados" value={`${stats?.novos ?? 0} / ${stats?.contatados ?? 0}`} />
+        <StatCard
+          label="Novos / Contatados"
+          value={`${stats?.novos ?? 0} / ${stats?.contatados ?? 0}`}
+        />
       </div>
 
       <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
@@ -143,7 +165,7 @@ function AdminDashboardPage() {
         </div>
       </div>
 
-      <div className="mt-4 overflow-hidden rounded-xl border border-border bg-white">
+      <div className="mt-4 overflow-hidden rounded-xl border border-border bg-white shadow-sm">
         {loading ? (
           <p className="p-6 text-sm text-muted-foreground">Carregando...</p>
         ) : rows.length === 0 ? (
@@ -157,6 +179,7 @@ function AdminDashboardPage() {
                   <th className="px-4 py-3">Nome</th>
                   <th className="px-4 py-3">WhatsApp</th>
                   <th className="px-4 py-3">Cidade</th>
+                  <th className="px-4 py-3">Quer ajudar como</th>
                   <th className="px-4 py-3">Status</th>
                   <th className="px-4 py-3">Ações</th>
                 </tr>
@@ -168,8 +191,20 @@ function AdminDashboardPage() {
                       {formatDate(row.created_at)}
                     </td>
                     <td className="px-4 py-3 font-medium">{row.nome}</td>
-                    <td className="px-4 py-3">{row.whatsapp}</td>
+                    <td className="px-4 py-3 whitespace-nowrap">{row.whatsapp}</td>
                     <td className="px-4 py-3">{row.cidade}</td>
+                    <td className="px-4 py-3">
+                      <div className="flex max-w-[260px] flex-wrap gap-1">
+                        {row.ajudas.map((ajuda) => (
+                          <span
+                            key={ajuda}
+                            className="inline-flex rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-semibold text-primary"
+                          >
+                            {ajuda}
+                          </span>
+                        ))}
+                      </div>
+                    </td>
                     <td className="px-4 py-3">
                       <StatusBadge status={row.status} />
                     </td>
@@ -186,17 +221,7 @@ function AdminDashboardPage() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          onClick={async () => {
-                            if (!confirm(`Excluir mensagem de ${row.nome}?`)) return
-                            try {
-                              await api.deleteApoiador(row.id)
-                              toast.success('Excluído')
-                              if (selected?.id === row.id) setSelected(null)
-                              await load()
-                            } catch (err) {
-                              toast.error(err instanceof Error ? err.message : 'Erro')
-                            }
-                          }}
+                          onClick={() => setDeleteTarget(row)}
                           aria-label="Excluir"
                         >
                           <Trash2 className="h-4 w-4 text-destructive" />
@@ -213,7 +238,7 @@ function AdminDashboardPage() {
 
       <form
         onSubmit={onChangePassword}
-        className="mt-10 max-w-lg rounded-xl border border-border bg-white p-5"
+        className="mt-10 max-w-lg rounded-xl border border-border bg-white p-5 shadow-sm"
       >
         <h3 className="text-lg font-semibold">Trocar senha</h3>
         <p className="mt-1 text-sm text-muted-foreground">
@@ -222,9 +247,8 @@ function AdminDashboardPage() {
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="currentPassword">Senha atual</Label>
-            <Input
+            <PasswordInput
               id="currentPassword"
-              type="password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               required
@@ -232,9 +256,8 @@ function AdminDashboardPage() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="newPassword">Nova senha</Label>
-            <Input
+            <PasswordInput
               id="newPassword"
-              type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               minLength={6}
@@ -247,21 +270,32 @@ function AdminDashboardPage() {
         </Button>
       </form>
 
-      {selected && (
-        <ApoiadorModal
-          row={selected}
-          onClose={() => setSelected(null)}
-          onUpdated={async () => {
-            await load()
-            const fresh = await api.getApoiador(selected.id)
-            setSelected(fresh)
-          }}
-          onDeleted={async () => {
-            setSelected(null)
-            await load()
-          }}
-        />
-      )}
+      <ApoiadorModal
+        row={selected}
+        onClose={() => setSelected(null)}
+        onUpdated={async () => {
+          if (!selected) return
+          await load()
+          const fresh = await api.getApoiador(selected.id)
+          setSelected(fresh)
+        }}
+        onRequestDelete={() => {
+          if (selected) setDeleteTarget(selected)
+        }}
+      />
+
+      <ConfirmModal
+        open={Boolean(deleteTarget)}
+        title="Excluir mensagem?"
+        description={
+          deleteTarget
+            ? `Tem certeza que deseja excluir o apoio de ${deleteTarget.nome}? Esta ação não pode ser desfeita.`
+            : ''
+        }
+        onClose={() => setDeleteTarget(null)}
+        onConfirm={() => void confirmDelete()}
+        loading={deleting}
+      />
     </div>
   )
 }
@@ -279,9 +313,7 @@ function StatCard({
     <div
       className={cn(
         'rounded-xl border p-4',
-        highlight
-          ? 'border-[#fdb814]/50 bg-[#fff8e6]'
-          : 'border-border bg-white',
+        highlight ? 'border-[#fdb814]/50 bg-[#fff8e6]' : 'border-border bg-white',
       )}
     >
       <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -322,23 +354,25 @@ function ApoiadorModal({
   row,
   onClose,
   onUpdated,
-  onDeleted,
+  onRequestDelete,
 }: {
-  row: ApoiadorRow
+  row: ApoiadorRow | null
   onClose: () => void
   onUpdated: () => Promise<void>
-  onDeleted: () => Promise<void>
+  onRequestDelete: () => void
 }) {
-  const [status, setStatus] = useState(row.status)
-  const [notas, setNotas] = useState(row.notas || '')
+  const [status, setStatus] = useState<ApoiadorRow['status']>('novo')
+  const [notas, setNotas] = useState('')
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
+    if (!row) return
     setStatus(row.status)
     setNotas(row.notas || '')
   }, [row])
 
   const save = async () => {
+    if (!row) return
     setSaving(true)
     try {
       await api.updateApoiador(row.id, { status, notas })
@@ -352,92 +386,100 @@ function ApoiadorModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <button
-        type="button"
-        className="absolute inset-0 bg-navy-deep/50"
-        aria-label="Fechar"
-        onClick={onClose}
-      />
-      <div className="relative z-10 max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl">
-        <h3 className="font-display text-xl font-semibold">{row.nome}</h3>
-        <p className="mt-1 text-sm text-muted-foreground">{formatDate(row.created_at)}</p>
+    <AdminModal
+      open={Boolean(row)}
+      onClose={onClose}
+      title={row?.nome || 'Detalhe'}
+      description={row ? formatDate(row.created_at) : undefined}
+      wide
+    >
+      {row && (
+        <>
+          <dl className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-xl bg-secondary/60 p-3">
+              <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                WhatsApp
+              </dt>
+              <dd className="mt-1">
+                <a
+                  className="font-medium text-primary underline underline-offset-2"
+                  href={`https://wa.me/55${row.whatsapp.replace(/\D/g, '').replace(/^55/, '')}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {row.whatsapp}
+                </a>
+              </dd>
+            </div>
+            <div className="rounded-xl bg-secondary/60 p-3">
+              <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Bairro / Cidade
+              </dt>
+              <dd className="mt-1 font-medium">{row.cidade}</dd>
+            </div>
+            <div className="rounded-xl bg-secondary/60 p-3 sm:col-span-2">
+              <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Quer ajudar como
+              </dt>
+              <dd className="mt-2 flex flex-wrap gap-1.5">
+                {row.ajudas.map((ajuda) => (
+                  <span
+                    key={ajuda}
+                    className="inline-flex rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary"
+                  >
+                    {ajuda}
+                  </span>
+                ))}
+              </dd>
+            </div>
+          </dl>
 
-        <dl className="mt-5 space-y-3 text-sm">
-          <div>
-            <dt className="font-semibold text-muted-foreground">WhatsApp</dt>
-            <dd>
-              <a
-                className="text-primary underline"
-                href={`https://wa.me/55${row.whatsapp.replace(/\D/g, '').replace(/^55/, '')}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {row.whatsapp}
-              </a>
-            </dd>
+          <div className="mt-5 space-y-2">
+            <Label htmlFor="status">Status</Label>
+            <select
+              id="status"
+              value={status}
+              onChange={(e) => setStatus(e.target.value as ApoiadorRow['status'])}
+              className="flex h-11 w-full rounded-md border border-border bg-white px-3 text-sm"
+            >
+              <option value="novo">Novo</option>
+              <option value="contatado">Contatado</option>
+              <option value="arquivado">Arquivado</option>
+            </select>
           </div>
-          <div>
-            <dt className="font-semibold text-muted-foreground">Bairro / Cidade</dt>
-            <dd>{row.cidade}</dd>
+
+          <div className="mt-4 space-y-2">
+            <Label htmlFor="notas">Notas internas</Label>
+            <textarea
+              id="notas"
+              value={notas}
+              onChange={(e) => setNotas(e.target.value)}
+              rows={4}
+              className="w-full rounded-md border border-border px-3 py-2 text-sm"
+              placeholder="Ex.: já liguei, interessado em coordenação..."
+            />
           </div>
-          <div>
-            <dt className="font-semibold text-muted-foreground">Quer ajudar como</dt>
-            <dd>{row.ajudas.join(', ')}</dd>
+
+          <div className="mt-6 flex flex-wrap gap-2">
+            <Button onClick={() => void save()} disabled={saving}>
+              {saving ? 'Salvando...' : 'Salvar'}
+            </Button>
+            <Button variant="outline" onClick={onClose}>
+              Fechar
+            </Button>
+            <Button
+              variant="ghost"
+              className="text-destructive"
+              onClick={() => {
+                onClose()
+                onRequestDelete()
+              }}
+            >
+              Excluir
+            </Button>
           </div>
-        </dl>
-
-        <div className="mt-5 space-y-2">
-          <Label htmlFor="status">Status</Label>
-          <select
-            id="status"
-            value={status}
-            onChange={(e) => setStatus(e.target.value as ApoiadorRow['status'])}
-            className="flex h-11 w-full rounded-md border border-border bg-white px-3 text-sm"
-          >
-            <option value="novo">Novo</option>
-            <option value="contatado">Contatado</option>
-            <option value="arquivado">Arquivado</option>
-          </select>
-        </div>
-
-        <div className="mt-4 space-y-2">
-          <Label htmlFor="notas">Notas internas</Label>
-          <textarea
-            id="notas"
-            value={notas}
-            onChange={(e) => setNotas(e.target.value)}
-            rows={4}
-            className="w-full rounded-md border border-border px-3 py-2 text-sm"
-            placeholder="Ex.: já liguei, interessado em coordenação..."
-          />
-        </div>
-
-        <div className="mt-6 flex flex-wrap gap-2">
-          <Button onClick={() => void save()} disabled={saving}>
-            {saving ? 'Salvando...' : 'Salvar'}
-          </Button>
-          <Button variant="outline" onClick={onClose}>
-            Fechar
-          </Button>
-          <Button
-            variant="ghost"
-            className="text-destructive"
-            onClick={async () => {
-              if (!confirm('Excluir esta mensagem?')) return
-              try {
-                await api.deleteApoiador(row.id)
-                toast.success('Excluído')
-                await onDeleted()
-              } catch (err) {
-                toast.error(err instanceof Error ? err.message : 'Erro')
-              }
-            }}
-          >
-            Excluir
-          </Button>
-        </div>
-      </div>
-    </div>
+        </>
+      )}
+    </AdminModal>
   )
 }

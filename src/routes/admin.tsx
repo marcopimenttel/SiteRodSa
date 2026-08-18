@@ -20,7 +20,7 @@ function AdminLayout() {
   const isLogin = pathname === '/admin/login'
 
   return (
-    <div className="min-h-svh bg-[#f3f6fb] text-navy-deep">
+    <div className={isLogin ? 'min-h-svh' : 'min-h-svh bg-[#f3f6fb] text-navy-deep'}>
       {!isLogin && (
         <header className="border-b border-border bg-white">
           <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
