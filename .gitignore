@@ -13,6 +13,9 @@ dist-ssr
 *.local
 .env
 
+# Dados do painel admin (apoiadores / visitas)
+data/
+
 # Editor
 .vscode/*
 !.vscode/extensions.json

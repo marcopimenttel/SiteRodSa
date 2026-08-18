@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { toast } from 'sonner'
 import { formasAjuda } from '@/data/noticias'
 import { config } from '@/lib/config'
+import { api } from '@/lib/api'
 import { Reveal } from '@/components/Reveal'
 import { MoldurasCta } from '@/components/MoldurasCta'
 import { Button } from '@/components/ui/button'
@@ -19,7 +20,7 @@ export function Apoiador() {
     setAjudas((prev) => (prev.includes(item) ? prev.filter((a) => a !== item) : [...prev, item]))
   }
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
     if (!nome.trim() || !whatsapp.trim() || !cidade.trim()) {
       toast.error('Preencha nome, WhatsApp e cidade/bairro.')
@@ -30,20 +31,21 @@ export function Apoiador() {
       return
     }
 
-    const subject = encodeURIComponent(`Quero apoiar — ${nome}`)
-    const body = encodeURIComponent(
-      [
-        `Nome: ${nome}`,
-        `WhatsApp: ${whatsapp}`,
-        `Cidade/Bairro: ${cidade}`,
-        `Quero ajudar como: ${ajudas.join(', ')}`,
-        '',
-        `Campanha Rodrigo Sá ${config.ballotNumber}`,
-      ].join('\n'),
-    )
-
-    window.location.href = `mailto:${config.contactEmail}?subject=${subject}&body=${body}`
-    toast.success('Abrindo seu e-mail para enviar o apoio.')
+    try {
+      await api.submitApoiador({
+        nome: nome.trim(),
+        whatsapp: whatsapp.trim(),
+        cidade: cidade.trim(),
+        ajudas,
+      })
+      toast.success('Apoio enviado! Em breve a campanha entrará em contato.')
+      setNome('')
+      setWhatsapp('')
+      setCidade('')
+      setAjudas([])
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Não foi possível enviar. Tente novamente.')
+    }
   }
 
   return (

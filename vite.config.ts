@@ -23,4 +23,9 @@ export default defineConfig({
       '@': path.resolve(rootDir, './src'),
     },
   },
+  server: {
+    proxy: {
+      '/api': 'http://localhost:3001',
+    },
+  },
 })

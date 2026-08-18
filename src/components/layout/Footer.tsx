@@ -146,6 +146,10 @@ export function Footer() {
           </p>
           <p>
             © {new Date().getFullYear()} Campanha Rodrigo Sá · Desenvolvido por Marcondes Pimentel
+            {' · '}
+            <Link to="/admin/login" className="underline underline-offset-2 hover:text-white">
+              Admin
+            </Link>
           </p>
         </div>
       </div>
