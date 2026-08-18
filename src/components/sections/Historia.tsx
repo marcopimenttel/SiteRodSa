@@ -4,6 +4,7 @@ import {
   Car,
   Cpu,
   Shield,
+  Vote,
   type LucideIcon,
 } from 'lucide-react'
 import { historia } from '@/data/candidato'
@@ -17,6 +18,7 @@ const marcoIcons: Record<string, LucideIcon> = {
   '2011': Shield,
   'Detran-AM': Car,
   Hoje: Building2,
+  '2026': Vote,
 }
 
 type MosaicTile = { type: 'photo'; src: string } | { type: 'yellow' }
@@ -181,19 +183,44 @@ export function Historia() {
                 <ol className="mt-8 grid gap-3 sm:grid-cols-2">
                   {historia.marcos.map((marco) => {
                     const Icon = marcoIcons[marco.ano] ?? Building2
+                    const destaque = 'numeroDestaque' in marco && marco.numeroDestaque
+
                     return (
                       <li
                         key={marco.ano}
-                        className="flex items-start gap-3 rounded-xl border border-border/80 bg-white/80 px-4 py-3"
+                        className={
+                          destaque
+                            ? 'flex items-start gap-3 rounded-xl border-2 border-[#fdb814]/70 bg-[#fdb814]/10 px-4 py-3'
+                            : 'flex items-start gap-3 rounded-xl border border-border/80 bg-white/80 px-4 py-3'
+                        }
                       >
-                        <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                        <span
+                          className={
+                            destaque
+                              ? 'mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#fdb814] text-[#021c4f]'
+                              : 'mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary'
+                          }
+                        >
                           <Icon className="h-4 w-4" strokeWidth={1.75} aria-hidden />
                         </span>
                         <div className="min-w-0">
-                          <p className="text-xs font-bold uppercase tracking-wider text-primary">
+                          <p
+                            className={
+                              destaque
+                                ? 'text-xs font-bold uppercase tracking-wider text-[#021c4f]'
+                                : 'text-xs font-bold uppercase tracking-wider text-primary'
+                            }
+                          >
                             {marco.ano}
                           </p>
-                          <p className="mt-1 text-sm font-semibold text-navy-deep">{marco.texto}</p>
+                          <p className="mt-1 text-sm font-semibold text-navy-deep">
+                            {marco.texto}
+                          </p>
+                          {destaque ? (
+                            <p className="mt-1 font-inter text-3xl font-black tracking-tight text-[#fdb814] sm:text-4xl">
+                              {marco.numeroDestaque}
+                            </p>
+                          ) : null}
                         </div>
                       </li>
                     )

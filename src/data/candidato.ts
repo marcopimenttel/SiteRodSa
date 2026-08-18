@@ -25,6 +25,11 @@ export const historia = {
     { ano: '2011', texto: 'Delegado da Polícia Civil' },
     { ano: 'Detran-AM', texto: 'Presidência e projetos estaduais' },
     { ano: 'Hoje', texto: 'Vereador · Presidente PP-AM · Mestre e doutorando' },
+    {
+      ano: '2026',
+      texto: 'Candidato a Deputado Estadual',
+      numeroDestaque: '11.111',
+    },
   ],
 }
 
