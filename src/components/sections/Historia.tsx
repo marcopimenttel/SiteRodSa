@@ -107,11 +107,28 @@ export function Historia() {
         <div className="absolute inset-x-0 top-0 h-14 opacity-60" style={{ background: `linear-gradient(to bottom, ${historiaBg}, transparent)` }} />
         <div className="absolute inset-x-0 bottom-0 h-16 opacity-60" style={{ background: `linear-gradient(to top, ${historiaBg}, transparent)` }} />
 
-        {/* Camada 3: amarelos sólidos (acima do véu, abaixo do conteúdo) */}
+        {/* Camada 3: amarelos + número 11111 (acima do véu, abaixo do conteúdo) */}
         <div className={mosaicGridClass}>
           {mosaicTiles.map((tile, i) =>
             tile.type === 'yellow' ? (
-              <div key={`yellow-${i}`} className="min-h-0 bg-[#fdb814]" />
+              <div
+                key={`yellow-${i}`}
+                className="relative flex min-h-0 items-center justify-center overflow-hidden bg-[#fdb814]"
+              >
+                <img
+                  src="/images/marca-numero-11111.svg"
+                  alt=""
+                  className={`mosaic-number h-auto w-[58%] max-w-[140px] object-contain ${
+                    i % 3 === 0
+                      ? ''
+                      : i % 3 === 1
+                        ? 'mosaic-number-b'
+                        : 'mosaic-number-c'
+                  }`}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
             ) : (
               <div key={`gap-${i}`} className="min-h-0" />
             ),

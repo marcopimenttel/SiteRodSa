@@ -139,12 +139,35 @@
     animation-delay: -8s;
   }
 
+  /* Número 11111 nos amarelos — leve flutuação */
+  .mosaic-number {
+    animation: mosaic-number-float 5.5s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  .mosaic-number-b {
+    animation-duration: 6.5s;
+    animation-delay: -1.8s;
+  }
+
+  .mosaic-number-c {
+    animation-duration: 7.2s;
+    animation-delay: -3.4s;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .mosaic-drift,
     .mosaic-drift-b,
     .mosaic-drift-c {
       animation: none;
       transform: scale(1.1);
+    }
+
+    .mosaic-number,
+    .mosaic-number-b,
+    .mosaic-number-c {
+      animation: none;
+      transform: none;
     }
 
     .hero-name-rail,
@@ -164,6 +187,15 @@
   }
   to {
     transform: scale(1.18);
+  }
+}
+
+@keyframes mosaic-number-float {
+  from {
+    transform: translate3d(0, 4%, 0) scale(0.96);
+  }
+  to {
+    transform: translate3d(0, -4%, 0) scale(1.04);
   }
 }
 
