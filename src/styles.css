@@ -139,20 +139,20 @@
     animation-delay: -8s;
   }
 
-  /* Número 11111 nos amarelos — leve flutuação */
+  /* Número 11111 nos amarelos — flutuação chamativa */
   .mosaic-number {
-    animation: mosaic-number-float 5.5s ease-in-out infinite alternate;
+    animation: mosaic-number-float 3.2s ease-in-out infinite;
     will-change: transform;
   }
 
   .mosaic-number-b {
-    animation-duration: 6.5s;
-    animation-delay: -1.8s;
+    animation-duration: 3.8s;
+    animation-delay: -1.2s;
   }
 
   .mosaic-number-c {
-    animation-duration: 7.2s;
-    animation-delay: -3.4s;
+    animation-duration: 4.4s;
+    animation-delay: -2.4s;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -191,11 +191,12 @@
 }
 
 @keyframes mosaic-number-float {
-  from {
-    transform: translate3d(0, 4%, 0) scale(0.96);
+  0%,
+  100% {
+    transform: translate3d(0, 6%, 0) scale(0.94) rotate(-2.5deg);
   }
-  to {
-    transform: translate3d(0, -4%, 0) scale(1.04);
+  50% {
+    transform: translate3d(0, -8%, 0) scale(1.08) rotate(2.5deg);
   }
 }
 

@@ -118,7 +118,7 @@ export function Historia() {
                 <img
                   src="/images/marca-numero-11111.svg"
                   alt=""
-                  className={`mosaic-number h-auto w-[58%] max-w-[140px] object-contain ${
+                  className={`mosaic-number h-auto w-[82%] max-w-[220px] object-contain ${
                     i % 3 === 0
                       ? ''
                       : i % 3 === 1
