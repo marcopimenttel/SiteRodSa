@@ -40,6 +40,8 @@ mkdirSync(DATA_DIR, { recursive: true })
  *    updated_at: string
  *  }>,
  *  views: Record<string, { first_seen: string, last_seen: string, hits: number }>,
+ *  dailyViews: Record<string, { uniques: number, hits: number }>,
+ *  meta: { dailyBackfilled?: boolean },
  *  seq: { admin: number, apoiador: number }
  * }} Db
  */
@@ -50,6 +52,8 @@ function emptyDb() {
     admins: [],
     apoiadores: [],
     views: {},
+    dailyViews: {},
+    meta: {},
     seq: { admin: 1, apoiador: 1 },
   }
 }
@@ -73,6 +77,80 @@ function saveDb(data) {
 
 function nowIso() {
   return new Date().toISOString()
+}
+
+/** Data YYYY-MM-DD no fuso de Manaus (campanha AM) */
+function dayKey(date = new Date()) {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Manaus',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(date)
+}
+
+/** @param {string} iso */
+function dayKeyFromIso(iso) {
+  const d = new Date(iso)
+  if (Number.isNaN(d.getTime())) return dayKey()
+  return dayKey(d)
+}
+
+/** @param {Db} data */
+function ensureDailyShape(data) {
+  if (!data.dailyViews || typeof data.dailyViews !== 'object') data.dailyViews = {}
+  if (!data.meta || typeof data.meta !== 'object') data.meta = {}
+}
+
+/**
+ * Preenche série diária a partir do histórico (uma vez), sem zerar contadores.
+ * @param {Db} data
+ */
+function backfillDailyViews(data) {
+  ensureDailyShape(data)
+  if (data.meta.dailyBackfilled) return false
+
+  /** @type {Record<string, { uniques: number, hits: number }>} */
+  const built = {}
+  for (const v of Object.values(data.views || {})) {
+    const d = dayKeyFromIso(v.first_seen || nowIso())
+    if (!built[d]) built[d] = { uniques: 0, hits: 0 }
+    built[d].uniques += 1
+    built[d].hits += Number(v.hits) || 1
+  }
+  data.dailyViews = built
+  data.meta.dailyBackfilled = true
+  return true
+}
+
+/**
+ * @param {Db} data
+ * @param {boolean} isUnique
+ */
+function bumpDailyView(data, isUnique) {
+  ensureDailyShape(data)
+  const d = dayKey()
+  if (!data.dailyViews[d]) data.dailyViews[d] = { uniques: 0, hits: 0 }
+  data.dailyViews[d].hits += 1
+  if (isUnique) data.dailyViews[d].uniques += 1
+}
+
+/**
+ * @param {Db} data
+ * @param {number} days
+ */
+function buildViewsSeries(data, days = 30) {
+  ensureDailyShape(data)
+  const out = []
+  const now = new Date()
+  for (let i = days - 1; i >= 0; i -= 1) {
+    const d = new Date(now)
+    d.setDate(d.getDate() - i)
+    const key = dayKey(d)
+    const row = data.dailyViews[key] || { uniques: 0, hits: 0 }
+    out.push({ date: key, uniques: row.uniques || 0, hits: row.hits || 0 })
+  }
+  return out
 }
 
 function hashPassword(password, salt = randomBytes(16).toString('hex')) {
@@ -102,6 +180,8 @@ function seedAdmin(db) {
 }
 
 let db = seedAdmin(loadDb())
+ensureDailyShape(db)
+if (backfillDailyViews(db)) saveDb(db)
 saveDb(db)
 
 function b64url(input) {
@@ -233,14 +313,17 @@ async function handleApi(req, res, pathname) {
       const visitorId = String(body.visitorId || '').trim().slice(0, 80)
       if (!visitorId) return sendJson(res, 400, { error: 'visitorId obrigatório' })
 
+      ensureDailyShape(db)
       const existing = db.views[visitorId]
       if (existing) {
         existing.last_seen = nowIso()
         existing.hits += 1
+        bumpDailyView(db, false)
         saveDb(db)
         return sendJson(res, 200, { ok: true, unique: false })
       }
       db.views[visitorId] = { first_seen: nowIso(), last_seen: nowIso(), hits: 1 }
+      bumpDailyView(db, true)
       saveDb(db)
       return sendJson(res, 201, { ok: true, unique: true })
     }
@@ -304,6 +387,7 @@ async function handleApi(req, res, pathname) {
     if (method === 'GET' && pathname === '/api/admin/stats') {
       const auth = requireAdmin(req, res)
       if (!auth) return
+      if (backfillDailyViews(db)) saveDb(db)
       const viewValues = Object.values(db.views)
       return sendJson(res, 200, {
         uniqueViews: viewValues.length,
@@ -311,6 +395,7 @@ async function handleApi(req, res, pathname) {
         apoiadores: db.apoiadores.length,
         novos: db.apoiadores.filter((a) => a.status === 'novo').length,
         contatados: db.apoiadores.filter((a) => a.status === 'contatado').length,
+        series: buildViewsSeries(db, 30),
       })
     }
 

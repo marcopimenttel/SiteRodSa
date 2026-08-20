@@ -19,7 +19,8 @@ function RootLayout() {
   const isAdmin = pathname.startsWith('/admin')
   const [launched, setLaunched] = useState(() => canShowFullSite())
 
-  useTrackPageView(launched && !isAdmin)
+  // Conta visitas no site completo e na Coming Soon (admin não conta)
+  useTrackPageView(!isAdmin)
 
   useEffect(() => {
     if (launched || isAdmin) return

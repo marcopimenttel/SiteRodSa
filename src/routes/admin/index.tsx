@@ -10,6 +10,7 @@ import {
   type ApoiadorRow,
 } from '@/lib/api'
 import { AdminModal, ConfirmModal } from '@/components/admin/AdminModal'
+import { VisitsChart } from '@/components/admin/VisitsChart'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { PasswordInput } from '@/components/ui/password-input'
@@ -143,6 +144,8 @@ function AdminDashboardPage() {
           value={`${stats?.novos ?? 0} / ${stats?.contatados ?? 0}`}
         />
       </div>
+
+      {stats?.series?.length ? <VisitsChart series={stats.series} /> : null}
 
       <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
         <h3 className="text-lg font-semibold">Mensagens ({filteredLabel})</h3>

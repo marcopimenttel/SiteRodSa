@@ -41,12 +41,19 @@ async function request<T>(
   return undefined as T
 }
 
+export type ViewsDay = {
+  date: string
+  uniques: number
+  hits: number
+}
+
 export type AdminStats = {
   uniqueViews: number
   totalHits: number
   apoiadores: number
   novos: number
   contatados: number
+  series: ViewsDay[]
 }
 
 export type ApoiadorRow = {
