@@ -1,0 +1,14 @@
+---
+description: Sempre fazer commit e push automático no GitHub após alterações
+alwaysApply: true
+---
+
+# Commit e push automáticos
+
+Após concluir alterações neste projeto (SiteRodSa):
+
+1. Faça **commit** das mudanças relevantes (mensagem clara, em inglês no estilo do repo).
+2. Faça **push** imediato para `origin` na branch atual (`main`, salvo indicação contrária).
+3. Não peça confirmação para commit/push — o usuário pediu isso como padrão.
+4. Não faça force push nem altere git config.
+5. Não commite `.env` nem segredos.
