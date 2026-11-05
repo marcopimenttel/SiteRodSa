@@ -80,10 +80,10 @@ function SocialButton({
       className={
         size === 'desktop'
           ? 'inline-flex h-14 w-14 items-center justify-center rounded-xl bg-[#fdb814] text-[#021c4f] shadow-md transition hover:scale-105 hover:bg-[#ffc933] sm:h-16 sm:w-16 lg:h-[4.5rem] lg:w-[4.5rem]'
-          : 'inline-flex h-10 w-10 items-center justify-center rounded-lg bg-[#fdb814] text-[#021c4f] shadow-md transition hover:scale-105 hover:bg-[#ffc933] sm:h-11 sm:w-11'
+          : 'inline-flex h-14 w-14 items-center justify-center rounded-xl bg-[#fdb814] text-[#021c4f] shadow-lg transition hover:scale-105 hover:bg-[#ffc933] sm:h-15 sm:w-15'
       }
     >
-      <Icon className={size === 'desktop' ? 'h-7 w-7 sm:h-8 sm:w-8' : 'h-5 w-5'} />
+      <Icon className={size === 'desktop' ? 'h-7 w-7 sm:h-8 sm:w-8' : 'h-7 w-7'} />
     </a>
   )
 }
@@ -92,7 +92,7 @@ export function Hero() {
   return (
     <section
       id="inicio"
-      className="relative flex min-h-[100svh] flex-col overflow-hidden text-white lg:block"
+      className="relative min-h-[100svh] overflow-hidden text-white"
       style={{ backgroundColor: '#021c4f' }}
     >
       {/* Base azul + Teatro Amazonas com fade direita → esquerda */}
@@ -114,7 +114,6 @@ export function Hero() {
             className="h-full w-full object-cover object-center"
             fetchPriority="high"
           />
-          {/* Mais visível à direita (atrás do vereador), some à esquerda */}
           <div
             className="absolute inset-0"
             style={{
@@ -128,23 +127,28 @@ export function Hero() {
       {/* Nome contorno — por cima do Teatro, atrás da foto */}
       <HeroNameBackdrop />
 
-      {/* Foto — mobile: centralizada e grande; desktop: direita */}
+      {/*
+        Foto:
+        - Mobile: ocupa quase toda a altura útil (sob o header), sobe para fechar o vão acima da cabeça
+        - Desktop: coluna direita
+        - Ícones ficam em z maior — por cima da foto, sem “cortar” com padding
+      */}
       <motion.div
         initial={{ opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.9, delay: 0.25, ease: easeOut }}
-        className="pointer-events-none relative z-[1] flex flex-1 items-end justify-center max-lg:min-h-0 max-lg:pt-16 max-lg:pb-20 lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:w-[56%] lg:items-stretch lg:justify-start lg:pb-0 lg:pt-0"
+        className="pointer-events-none absolute inset-x-0 bottom-0 top-14 z-[1] flex items-end justify-center sm:top-16 lg:inset-y-0 lg:left-auto lg:right-0 lg:top-0 lg:w-[56%] lg:items-stretch lg:justify-start"
       >
         <img
           src="/images/hero-foto.png?v=3"
           alt="Rodrigo Sá — Vereador de Manaus"
-          className="relative z-10 mx-auto h-auto w-[92%] max-w-[640px] scale-110 object-contain object-bottom sm:w-[88%] sm:max-w-[700px] lg:mx-0 lg:h-full lg:w-full lg:max-w-none lg:origin-bottom lg:translate-y-[10%] lg:scale-100 lg:object-cover lg:object-[center_8%]"
+          className="relative z-10 h-full w-auto max-w-none scale-[1.28] object-contain object-bottom sm:scale-[1.22] lg:mx-0 lg:h-full lg:w-full lg:max-w-none lg:origin-bottom lg:translate-y-[10%] lg:scale-100 lg:object-cover lg:object-[center_8%]"
           fetchPriority="high"
         />
       </motion.div>
 
-      {/* Redes desktop — grid 3×2 à esquerda */}
-      <div className="pointer-events-none relative z-10 mx-auto hidden w-full max-w-[1400px] lg:absolute lg:inset-0 lg:mx-auto lg:block lg:px-8">
+      {/* Redes desktop — grid 3×2 à esquerda (ok) */}
+      <div className="pointer-events-none absolute inset-0 z-10 mx-auto hidden w-full max-w-[1400px] lg:block lg:px-8">
         <div className="flex h-full max-w-[48%] items-center">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
@@ -170,14 +174,14 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Redes mobile — uma linha no rodapé */}
+      {/* Redes mobile — por cima da foto, sem cortá-la */}
       <motion.div
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.65, delay: 0.35, ease: easeOut }}
-        className="absolute inset-x-0 bottom-4 z-20 flex justify-center px-3 lg:hidden"
+        className="absolute inset-x-0 bottom-5 z-30 flex justify-center px-3 lg:hidden"
       >
-        <div className="flex items-center justify-center gap-2 sm:gap-2.5">
+        <div className="flex items-center justify-center gap-2.5 sm:gap-3">
           {heroSocials.map((rede) => {
             const href = rede.url()
             const active = rede.ready() && Boolean(href)

@@ -9,7 +9,9 @@ type Props = {
 
 export function BrandLogo({ variant = 'branco', className, priority = false }: Props) {
   const src =
-    variant === 'azul' ? '/images/logo-vereador.svg' : '/images/logo-vereador-branco.svg'
+    variant === 'azul'
+      ? '/images/logo-vereador.svg?v=2'
+      : '/images/logo-vereador-branco.svg?v=2'
 
   return (
     <img
