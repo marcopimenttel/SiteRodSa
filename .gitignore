@@ -13,8 +13,8 @@ dist-ssr
 *.local
 .env
 
-# Dados do painel admin (apoiadores / visitas)
-data/
+# Dados do painel admin (apoiadores / visitas) — só na raiz, não src/data
+/data/
 
 # Editor
 .vscode/*
