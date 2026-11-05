@@ -28,7 +28,7 @@ function AdminLayout() {
               <p className="text-xs font-bold uppercase tracking-wider text-primary">
                 Área administrativa
               </p>
-              <h1 className="font-display text-xl font-semibold">Campanha Rodrigo Sá</h1>
+              <h1 className="font-display text-xl font-semibold">Gabinete Rodrigo Sá</h1>
             </div>
             <a href="/" className="text-sm font-medium text-muted-foreground hover:text-navy-deep">
               Ver site

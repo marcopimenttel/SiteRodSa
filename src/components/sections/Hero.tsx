@@ -122,7 +122,7 @@ export function Hero() {
       >
         <img
           src="/images/hero-foto.png?v=3"
-          alt="Rodrigo Sá — candidato a Deputado Estadual"
+          alt="Rodrigo Sá — Vereador de Manaus"
           className="relative z-10 mx-auto h-auto w-full max-w-[520px] scale-110 object-contain object-bottom sm:max-w-[560px] lg:mx-0 lg:h-full lg:max-w-none lg:w-full lg:origin-bottom lg:translate-y-[10%] lg:scale-100 lg:object-cover lg:object-[center_8%]"
           fetchPriority="high"
         />
@@ -131,7 +131,7 @@ export function Hero() {
       {/* Conteúdo tipográfico */}
       <div className="relative z-10 order-first mx-auto flex w-full max-w-[1400px] flex-1 items-start px-4 pb-2 pt-14 sm:px-6 lg:min-h-[100svh] lg:items-center lg:px-8 lg:pb-16 lg:pt-20">
         <div className="w-full max-w-xl lg:max-w-[48%]">
-          {/* Marca nome + número — entrada + leve pulso contínuo */}
+          {/* Logo — entrada + leve pulso contínuo */}
           <motion.div
             initial={{ opacity: 0, y: 28, scale: 0.94 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -139,8 +139,8 @@ export function Hero() {
             className="origin-left"
           >
             <motion.img
-              src="/images/hero-marca.svg"
-              alt="Deputado Estadual Rodrigo Sá — 11111"
+              src="/images/logo-vereador-branco.svg"
+              alt="Rodrigo Sá — Vereador de Manaus"
               className="h-auto w-full max-w-[980px] origin-left object-contain object-left"
               fetchPriority="high"
               animate={{ scale: [1, 1.035, 1] }}
@@ -153,19 +153,14 @@ export function Hero() {
             />
           </motion.div>
 
-          {/* SA-04 slogan — no mobile sobe (perto do número) */}
-          <motion.div
-            initial={{ opacity: 0, y: 22 }}
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.18, ease: easeOut }}
-            className="-mt-1 sm:mt-1 lg:mt-5"
+            className="mt-3 font-display text-lg font-semibold tracking-wide text-[#fdb814] sm:mt-4 sm:text-xl lg:mt-5 lg:text-2xl"
           >
-            <img
-              src="/images/hero-slogan.svg"
-              alt="#Agora é pelo Amazonas"
-              className="h-auto w-full max-w-[900px] object-contain object-left"
-            />
-          </motion.div>
+            Vereador de Manaus
+          </motion.p>
 
           {/* Redes — no mobile sobem junto, com folga acima da foto */}
           <motion.div

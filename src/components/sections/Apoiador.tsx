@@ -1,11 +1,9 @@
 import { useState, type FormEvent } from 'react'
 import { toast } from 'sonner'
 import { formasAjuda } from '@/data/noticias'
-import { config } from '@/lib/config'
 import { api } from '@/lib/api'
 import { isValidPhoneMask } from '@/lib/phone'
 import { Reveal } from '@/components/Reveal'
-import { MoldurasCta } from '@/components/MoldurasCta'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
@@ -44,7 +42,7 @@ export function Apoiador() {
         cidade: cidade.trim(),
         ajudas,
       })
-      toast.success('Apoio enviado! Em breve a campanha entrará em contato.')
+      toast.success('Apoio enviado! Em breve entraremos em contato.')
       setNome('')
       setWhatsapp('')
       setCidade('')
@@ -69,12 +67,9 @@ export function Apoiador() {
             <p className="section-eyebrow text-gold/90">Participe</p>
             <h2 className="section-title">Seja um apoiador</h2>
             <p className="mt-4 max-w-md text-white/75">
-              Junte-se à campanha Rodrigo Sá {config.ballotNumber}. Sua ajuda faz a diferença em
-              cada bairro e município do Amazonas.
+              Junte-se ao trabalho do Vereador Rodrigo Sá. Sua ajuda faz a diferença em cada
+              bairro de Manaus.
             </p>
-            <div className="mt-6">
-              <MoldurasCta />
-            </div>
           </div>
         </Reveal>
 
@@ -135,7 +130,7 @@ export function Apoiador() {
                 Enviar meu apoio
               </Button>
               <p className="text-center text-xs text-muted-foreground">
-                Seus dados serão usados apenas para contato da campanha, conforme a{' '}
+                Seus dados serão usados apenas para contato do gabinete, conforme a{' '}
                 <a href="/privacidade" className="underline underline-offset-2">
                   Política de Privacidade
                 </a>

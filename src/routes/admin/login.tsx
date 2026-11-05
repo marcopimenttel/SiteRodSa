@@ -156,8 +156,8 @@ function AdminLoginPage() {
             className="origin-left"
           >
             <motion.img
-              src="/images/hero-marca.svg"
-              alt="Deputado Estadual Rodrigo Sá — 11111"
+              src="/images/logo-vereador-branco.svg"
+              alt="Rodrigo Sá — Vereador de Manaus"
               className="h-auto w-full max-w-[980px] origin-left object-contain object-left"
               fetchPriority="high"
               animate={{ scale: [1, 1.035, 1] }}
@@ -170,18 +170,14 @@ function AdminLoginPage() {
             />
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 22 }}
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.18, ease: easeOut }}
-            className="-mt-1 sm:mt-1 lg:mt-5"
+            className="mt-3 font-display text-lg font-semibold tracking-wide text-[#fdb814] sm:mt-4 sm:text-xl lg:mt-5"
           >
-            <img
-              src="/images/hero-slogan.svg"
-              alt="#Agora é pelo Amazonas"
-              className="h-auto w-full max-w-[900px] object-contain object-left"
-            />
-          </motion.div>
+            Vereador de Manaus
+          </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 18 }}

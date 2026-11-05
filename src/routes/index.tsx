@@ -5,7 +5,6 @@ import { Detran } from '@/components/sections/Detran'
 import { Camara } from '@/components/sections/Camara'
 import { Depoimentos } from '@/components/sections/Depoimentos'
 import { Galeria } from '@/components/sections/Galeria'
-import { Propostas } from '@/components/sections/Propostas'
 import { Redes } from '@/components/sections/Redes'
 import { Apoiador } from '@/components/sections/Apoiador'
 
@@ -23,7 +22,6 @@ function HomePage() {
       <Camara />
       <Depoimentos />
       <Galeria />
-      <Propostas />
       <Redes />
       <Apoiador />
     </>

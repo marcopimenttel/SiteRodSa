@@ -3,7 +3,6 @@ import { Link } from '@tanstack/react-router'
 import { Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
 import { BrandLogo } from '@/components/BrandLogo'
-import { MoldurasCta } from '@/components/MoldurasCta'
 import { Button } from '@/components/ui/button'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { cn } from '@/lib/utils'
@@ -12,7 +11,6 @@ const links = [
   { href: '/#inicio', label: 'Início' },
   { href: '/#historia', label: 'Minha História' },
   { href: '/#trabalho', label: 'Trabalho' },
-  { href: '/#propostas', label: 'Propostas' },
   { href: '/#contato', label: 'Contato' },
 ]
 
@@ -43,9 +41,10 @@ export function Header() {
         </nav>
 
         <div className="relative z-10 flex shrink-0 items-center gap-2">
-          <MoldurasCta
-            size="sm"
-            className="hidden max-w-[220px] truncate sm:inline-flex lg:max-w-none"
+          <WhatsAppButton
+            className="hidden sm:inline-flex"
+            mode="business"
+            label="Fale Comigo"
           />
           <Button
             variant="ghost"
@@ -85,7 +84,6 @@ export function Header() {
                 </a>
               ))}
               <div className="mt-2 space-y-2 px-1">
-                <MoldurasCta fullWidth />
                 <WhatsAppButton className="w-full" mode="business" label="Fale Comigo" />
               </div>
             </nav>

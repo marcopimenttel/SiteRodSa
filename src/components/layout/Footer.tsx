@@ -8,7 +8,7 @@ import {
   WhatsAppIcon,
   XIcon,
 } from '@/components/icons/SocialIcons'
-import { MoldurasCta } from '@/components/MoldurasCta'
+import { BrandLogo } from '@/components/BrandLogo'
 import { config, whatsappBusinessUrl } from '@/lib/config'
 
 const footerSocials = [
@@ -55,17 +55,13 @@ export function Footer() {
     <footer className="bg-footer text-white">
       <div className="container-site section-pad grid gap-10 md:grid-cols-[1.2fr_1fr_1fr]">
         <div>
-          <img
-            src="/images/hero-marca.svg"
-            alt="Deputado Estadual Rodrigo Sá — 11111"
+          <BrandLogo
+            variant="branco"
             className="h-auto w-full max-w-[320px] object-contain object-left"
           />
           <p className="mt-4 max-w-sm text-sm text-white/70">
-            {config.slogan}. Material de campanha eleitoral para Deputado Estadual do Amazonas.
+            {config.role}. Trabalho e proximidade com a população de Manaus.
           </p>
-          <div className="mt-5">
-            <MoldurasCta />
-          </div>
         </div>
 
         <div>
@@ -127,25 +123,10 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="container-site px-4 py-5 sm:px-6 lg:px-8">
-          <div className="rounded-lg border border-[#fdb814]/35 bg-[#fdb814]/10 px-4 py-3 text-center sm:px-5 sm:text-left">
-            <p className="text-xs font-bold uppercase tracking-wide text-[#fdb814] sm:text-sm">
-              Propaganda Eleitoral — Federação União Progressista
-            </p>
-            <p className="mt-1 text-xs text-white/85 sm:text-sm">
-              CNPJ do candidato: <span className="font-semibold text-white">68.468.441/0001-56</span>
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="border-t border-white/10">
         <div className="container-site flex flex-col gap-2 px-4 py-6 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
           <p>
-            Material de campanha eleitoral. Prestação de contas: link do TSE quando disponível.
-          </p>
-          <p>
-            © {new Date().getFullYear()} Campanha Rodrigo Sá · Desenvolvido por Marcondes Pimentel
+            © {new Date().getFullYear()} Rodrigo Sá · Vereador de Manaus · Desenvolvido por
+            Marcondes Pimentel
             {' · '}
             <Link to="/admin/login" className="underline underline-offset-2 hover:text-white">
               Admin

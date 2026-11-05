@@ -74,7 +74,7 @@ export function Galeria() {
                   <motion.img
                     key={current}
                     src={current}
-                    alt={`Momento da campanha ${index + 1} de ${total}`}
+                    alt={`Momento do mandato ${index + 1} de ${total}`}
                     initial={{ opacity: 0, scale: 1.04 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.98 }}

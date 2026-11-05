@@ -4,7 +4,6 @@ import {
   Car,
   Cpu,
   Shield,
-  Vote,
   type LucideIcon,
 } from 'lucide-react'
 import { historia } from '@/data/candidato'
@@ -18,7 +17,6 @@ const marcoIcons: Record<string, LucideIcon> = {
   '2011': Shield,
   'Detran-AM': Car,
   Hoje: Building2,
-  '2026': Vote,
 }
 
 type MosaicTile = { type: 'photo'; src: string } | { type: 'yellow' }
@@ -107,28 +105,14 @@ export function Historia() {
         <div className="absolute inset-x-0 top-0 h-14 opacity-60" style={{ background: `linear-gradient(to bottom, ${historiaBg}, transparent)` }} />
         <div className="absolute inset-x-0 bottom-0 h-16 opacity-60" style={{ background: `linear-gradient(to top, ${historiaBg}, transparent)` }} />
 
-        {/* Camada 3: amarelos + número 11111 (acima do véu, abaixo do conteúdo) */}
+        {/* Camada 3: tiles amarelos (acima do véu, abaixo do conteúdo) */}
         <div className={mosaicGridClass}>
           {mosaicTiles.map((tile, i) =>
             tile.type === 'yellow' ? (
               <div
                 key={`yellow-${i}`}
-                className="relative flex min-h-0 items-center justify-center overflow-hidden bg-[#fdb814]"
-              >
-                <img
-                  src="/images/marca-numero-11111.svg"
-                  alt=""
-                  className={`mosaic-number h-auto w-[82%] max-w-[220px] object-contain ${
-                    i % 3 === 0
-                      ? ''
-                      : i % 3 === 1
-                        ? 'mosaic-number-b'
-                        : 'mosaic-number-c'
-                  }`}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
+                className="relative min-h-0 overflow-hidden bg-[#fdb814]"
+              />
             ) : (
               <div key={`gap-${i}`} className="min-h-0" />
             ),
@@ -172,17 +156,11 @@ export function Historia() {
 
           <Reveal delay={0.1}>
             <div className="overflow-hidden rounded-[1.75rem] border border-white/80 bg-white shadow-[0_20px_60px_rgba(0,26,77,0.1)]">
-              {/* Header do container — fundo azul + logo + número (SA-02) */}
-              <div className="flex items-center justify-between gap-4 bg-[#021c4f] px-5 py-4 sm:px-8 sm:py-5">
+              {/* Header do container — fundo azul + logo */}
+              <div className="flex items-center bg-[#021c4f] px-5 py-4 sm:px-8 sm:py-5">
                 <BrandLogo
                   variant="branco"
-                  className="h-10 w-auto max-w-[min(58%,280px)] sm:h-12 sm:max-w-[320px]"
-                />
-                <img
-                  src="/images/marca-numero.svg"
-                  alt="11111"
-                  className="h-9 w-auto max-w-[38%] object-contain object-right sm:h-11"
-                  loading="lazy"
+                  className="h-10 w-auto max-w-[min(80%,320px)] sm:h-12 sm:max-w-[360px]"
                 />
               </div>
 
@@ -200,44 +178,22 @@ export function Historia() {
                 <ol className="mt-8 grid gap-3 sm:grid-cols-2">
                   {historia.marcos.map((marco) => {
                     const Icon = marcoIcons[marco.ano] ?? Building2
-                    const destaque = 'numeroDestaque' in marco && marco.numeroDestaque
 
                     return (
                       <li
                         key={marco.ano}
-                        className={
-                          destaque
-                            ? 'flex items-start gap-3 rounded-xl border-2 border-[#fdb814]/70 bg-[#fdb814]/10 px-4 py-3'
-                            : 'flex items-start gap-3 rounded-xl border border-border/80 bg-white/80 px-4 py-3'
-                        }
+                        className="flex items-start gap-3 rounded-xl border border-border/80 bg-white/80 px-4 py-3"
                       >
-                        <span
-                          className={
-                            destaque
-                              ? 'mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#fdb814] text-[#021c4f]'
-                              : 'mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary'
-                          }
-                        >
+                        <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                           <Icon className="h-4 w-4" strokeWidth={1.75} aria-hidden />
                         </span>
                         <div className="min-w-0">
-                          <p
-                            className={
-                              destaque
-                                ? 'text-xs font-bold uppercase tracking-wider text-[#021c4f]'
-                                : 'text-xs font-bold uppercase tracking-wider text-primary'
-                            }
-                          >
+                          <p className="text-xs font-bold uppercase tracking-wider text-primary">
                             {marco.ano}
                           </p>
                           <p className="mt-1 text-sm font-semibold text-navy-deep">
                             {marco.texto}
                           </p>
-                          {destaque ? (
-                            <p className="mt-1 font-inter text-3xl font-black tracking-tight text-[#fdb814] sm:text-4xl">
-                              {marco.numeroDestaque}
-                            </p>
-                          ) : null}
                         </div>
                       </li>
                     )

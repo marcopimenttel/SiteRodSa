@@ -59,7 +59,7 @@ export function Redes() {
               <p className="section-eyebrow text-primary">Redes</p>
               <h2 className="section-title text-navy-deep">Acompanhe o Rodrigo Sá</h2>
               <p className="mt-3 text-muted-foreground">
-                Siga nas redes e fique por dentro da campanha.
+                Siga nas redes e fique por dentro do mandato.
               </p>
             </div>
 

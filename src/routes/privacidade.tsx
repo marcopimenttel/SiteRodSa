@@ -14,28 +14,28 @@ function PrivacidadePage() {
           Política de Privacidade
         </h1>
         <p className="mt-6 text-muted-foreground">
-          Esta página descreve como a campanha {config.candidateName} ({config.ballotNumber}) trata
-          dados pessoais coletados neste site, em conformidade com a Lei Geral de Proteção de Dados
-          (Lei nº 13.709/2018).
+          Esta página descreve como o gabinete do {config.role} {config.candidateName} trata dados
+          pessoais coletados neste site, em conformidade com a Lei Geral de Proteção de Dados (Lei
+          nº 13.709/2018).
         </p>
 
         <h2 className="mt-10 text-2xl font-bold text-navy-deep">1. Dados coletados</h2>
         <p className="mt-3 text-muted-foreground">
-          Por meio do formulário de voluntários, podemos receber nome, WhatsApp, bairro/cidade e a
-          forma como deseja apoiar a campanha. Também utilizamos cookies essenciais para lembrar sua
+          Por meio do formulário de apoiadores, podemos receber nome, WhatsApp, bairro/cidade e a
+          forma como deseja ajudar. Também utilizamos cookies essenciais para lembrar sua
           preferência de consentimento.
         </p>
 
         <h2 className="mt-8 text-2xl font-bold text-navy-deep">2. Finalidade</h2>
         <p className="mt-3 text-muted-foreground">
-          Os dados são usados exclusivamente para contato relacionado à campanha eleitoral,
-          organização de voluntariado e comunicação institucional.
+          Os dados são usados exclusivamente para contato relacionado ao mandato, organização de
+          voluntariado e comunicação institucional.
         </p>
 
         <h2 className="mt-8 text-2xl font-bold text-navy-deep">3. Compartilhamento</h2>
         <p className="mt-3 text-muted-foreground">
           Não vendemos dados pessoais. O compartilhamento ocorre apenas quando necessário para a
-          operação da campanha ou por obrigação legal.
+          operação do gabinete ou por obrigação legal.
         </p>
 
         <h2 className="mt-8 text-2xl font-bold text-navy-deep">4. Seus direitos</h2>

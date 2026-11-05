@@ -139,7 +139,7 @@
     animation-delay: -8s;
   }
 
-  /* Número 11111 nos amarelos — flutuação chamativa */
+  /* Tiles amarelos do mosaico — flutuação suave */
   .mosaic-number {
     animation: mosaic-number-float 3.2s ease-in-out infinite;
     will-change: transform;

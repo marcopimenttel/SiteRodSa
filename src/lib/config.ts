@@ -2,17 +2,12 @@ const env = import.meta.env
 
 export const config = {
   candidateName: 'Rodrigo Sá',
-  ballotNumber: '11111',
   party: 'PP-AM',
-  role: 'Candidato a Deputado Estadual',
-  slogan: 'O nosso estado merece essa vitória',
+  role: 'Vereador de Manaus',
   contactEmail: (env.VITE_CONTACT_EMAIL as string) || 'contato@rodrigosa.com.br',
-  /** Molduras digitais (eu.apoio) */
-  moldurasUrl:
-    (env.VITE_MOLDURAS_URL as string) || 'https://app.euapoio.cloud/c/rodrigosa',
   /** Exibição do WhatsApp (rodapé) */
   whatsappDisplay: '(92) 98147-7787',
-  /** WhatsApp da campanha — DDI+DDD, só números */
+  /** WhatsApp — DDI+DDD, só números */
   whatsappNumber: ((env.VITE_WHATSAPP_NUMBER as string) || '5592981477787').replace(/\D/g, ''),
   social: {
     /** Canal oficial WhatsApp (ícones de redes) */
@@ -36,7 +31,7 @@ export function whatsappChannelUrl() {
   return hasWhatsAppChannel() ? config.social.whatsapp : null
 }
 
-/** WhatsApp da campanha (botão flutuante / menu) */
+/** WhatsApp do gabinete (botão flutuante / menu) */
 export function hasWhatsAppBusiness() {
   return config.whatsappNumber.length >= 10
 }
@@ -44,7 +39,7 @@ export function hasWhatsAppBusiness() {
 export function whatsappBusinessUrl(message?: string) {
   if (!hasWhatsAppBusiness()) return null
   const text = encodeURIComponent(
-    message ?? `Olá! Quero saber mais sobre a campanha do Rodrigo Sá ${config.ballotNumber}.`,
+    message ?? `Olá! Quero falar com o gabinete do Vereador Rodrigo Sá.`,
   )
   return `https://wa.me/${config.whatsappNumber}?text=${text}`
 }

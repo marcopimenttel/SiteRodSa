@@ -38,7 +38,7 @@ export function WhatsAppButton({
     const url = whatsappBusinessUrl()
     if (!url) {
       toast.message('WhatsApp em breve', {
-        description: 'O número oficial da campanha será divulgado em breve.',
+        description: 'O número oficial será divulgado em breve.',
       })
       return
     }
