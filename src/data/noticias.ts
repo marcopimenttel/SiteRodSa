@@ -23,7 +23,6 @@ export const noticias = [
 ]
 
 export const formasAjuda = [
-  'Distribuir material',
   'Divulgar nas redes',
   'Ser coordenador de bairro',
   'Apoiar eventos',

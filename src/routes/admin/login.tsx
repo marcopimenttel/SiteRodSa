@@ -3,65 +3,17 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { motion } from 'motion/react'
 import { toast } from 'sonner'
 import { api, setAdminToken } from '@/lib/api'
-import { config } from '@/lib/config'
 import { HeroNameBackdrop } from '@/components/HeroNameBackdrop'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { PasswordInput } from '@/components/ui/password-input'
-import {
-  FacebookIcon,
-  FlickrIcon,
-  InstagramIcon,
-  TikTokIcon,
-  WhatsAppIcon,
-  XIcon,
-} from '@/components/icons/SocialIcons'
 
 export const Route = createFileRoute('/admin/login')({
   component: AdminLoginPage,
 })
 
 const easeOut = [0.22, 1, 0.36, 1] as const
-
-const heroSocials = [
-  {
-    nome: 'WhatsApp',
-    url: () => config.social.whatsapp,
-    icon: WhatsAppIcon,
-    ready: () => Boolean(config.social.whatsapp),
-  },
-  {
-    nome: 'Instagram',
-    url: () => config.social.instagram,
-    icon: InstagramIcon,
-    ready: () => Boolean(config.social.instagram),
-  },
-  {
-    nome: 'Facebook',
-    url: () => config.social.facebook,
-    icon: FacebookIcon,
-    ready: () => Boolean(config.social.facebook),
-  },
-  {
-    nome: 'X',
-    url: () => config.social.x,
-    icon: XIcon,
-    ready: () => Boolean(config.social.x),
-  },
-  {
-    nome: 'TikTok',
-    url: () => config.social.tiktok,
-    icon: TikTokIcon,
-    ready: () => Boolean(config.social.tiktok),
-  },
-  {
-    nome: 'Flickr',
-    url: () => config.social.flickr,
-    icon: FlickrIcon,
-    ready: () => Boolean(config.social.flickr),
-  },
-] as const
 
 function AdminLoginPage() {
   const navigate = useNavigate()
@@ -96,39 +48,24 @@ function AdminLoginPage() {
             background: `
               radial-gradient(ellipse 70% 55% at 78% 42%, rgba(55, 110, 200, 0.35) 0%, transparent 58%),
               radial-gradient(ellipse 55% 45% at 18% 70%, rgba(8, 40, 110, 0.7) 0%, transparent 55%),
-              radial-gradient(ellipse 40% 35% at 55% 15%, rgba(253, 184, 20, 0.08) 0%, transparent 50%),
               radial-gradient(circle at 50% 50%, #042a6e 0%, #021c4f 55%, #011233 100%)
             `,
           }}
         />
-        <div
-          className="absolute -right-[10%] top-[8%] h-[70vmin] w-[70vmin] rounded-full opacity-40 blur-3xl"
-          style={{
-            background:
-              'radial-gradient(circle at 35% 35%, rgba(120, 170, 255, 0.45) 0%, rgba(20, 70, 160, 0.2) 40%, transparent 70%)',
-          }}
-        />
-        <div
-          className="absolute -left-[15%] bottom-[-10%] h-[55vmin] w-[55vmin] rounded-full opacity-50 blur-3xl"
-          style={{
-            background:
-              'radial-gradient(circle at 60% 40%, rgba(30, 80, 180, 0.5) 0%, rgba(2, 28, 79, 0) 70%)',
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-[0.07]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)
-            `,
-            backgroundSize: '48px 48px',
-            maskImage:
-              'radial-gradient(ellipse 80% 70% at 50% 45%, black 20%, transparent 75%)',
-            WebkitMaskImage:
-              'radial-gradient(ellipse 80% 70% at 50% 45%, black 20%, transparent 75%)',
-          }}
-        />
+        <div className="absolute inset-0">
+          <img
+            src="/images/teatroam.webp"
+            alt=""
+            className="h-full w-full object-cover object-center"
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(to left, rgba(2,28,79,0.15) 0%, rgba(2,28,79,0.45) 35%, rgba(2,28,79,0.82) 68%, #021c4f 100%)',
+            }}
+          />
+        </div>
       </div>
 
       <HeroNameBackdrop />
@@ -149,68 +86,6 @@ function AdminLoginPage() {
 
       <div className="relative z-10 order-first mx-auto flex w-full max-w-[1400px] flex-1 items-start px-4 pb-8 pt-10 sm:px-6 lg:min-h-[100svh] lg:items-center lg:px-8 lg:pb-16 lg:pt-20">
         <div className="w-full max-w-xl lg:max-w-[48%]">
-          <motion.div
-            initial={{ opacity: 0, y: 28, scale: 0.94 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.75, ease: easeOut }}
-            className="origin-left"
-          >
-            <motion.img
-              src="/images/logo-vereador-branco.svg"
-              alt="Rodrigo Sá — Vereador de Manaus"
-              className="h-auto w-full max-w-[980px] origin-left object-contain object-left"
-              fetchPriority="high"
-              animate={{ scale: [1, 1.035, 1] }}
-              transition={{
-                duration: 3.8,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                delay: 0.9,
-              }}
-            />
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.18, ease: easeOut }}
-            className="mt-3 font-display text-lg font-semibold tracking-wide text-[#fdb814] sm:mt-4 sm:text-xl lg:mt-5"
-          >
-            Vereador de Manaus
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.35, ease: easeOut }}
-            className="mt-2 mb-5 flex flex-wrap items-center justify-center gap-2.5 sm:mt-3 sm:mb-6 sm:gap-4 lg:mt-6 lg:justify-start"
-          >
-            {heroSocials.map((rede) => {
-              const Icon = rede.icon
-              const href = rede.url()
-              const active = rede.ready() && Boolean(href)
-
-              return (
-                <a
-                  key={rede.nome}
-                  href={active ? href : undefined}
-                  target={active ? '_blank' : undefined}
-                  rel={active ? 'noreferrer' : undefined}
-                  aria-label={rede.nome}
-                  onClick={(e) => {
-                    if (!active) {
-                      e.preventDefault()
-                      toast.message(`${rede.nome} em breve`)
-                    }
-                  }}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:scale-110 hover:border-[#fdb814] hover:bg-[#fdb814] hover:text-[#021c4f] sm:h-12 sm:w-12"
-                >
-                  <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
-                </a>
-              )
-            })}
-          </motion.div>
-
           <motion.form
             onSubmit={onSubmit}
             initial={{ opacity: 0, y: 20 }}

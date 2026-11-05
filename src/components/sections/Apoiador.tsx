@@ -56,7 +56,7 @@ export function Apoiador() {
     <section id="apoiador" className="relative overflow-hidden bg-navy text-white">
       <div
         className="absolute inset-0 bg-cover bg-center opacity-25"
-        style={{ backgroundImage: "url('/images/apoiador.jpg')" }}
+        style={{ backgroundImage: "url('/images/apoiador.webp')" }}
         aria-hidden
       />
       <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/95 to-navy/90" />

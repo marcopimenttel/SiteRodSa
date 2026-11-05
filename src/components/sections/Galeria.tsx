@@ -37,9 +37,9 @@ export function Galeria() {
           <div className="max-w-2xl text-left lg:mx-auto lg:text-center">
             <p className="section-eyebrow text-gold">Nos bastidores</p>
             <h2 className="section-title">
-              Momentos com o povo do{' '}
+              Momentos com o povo de{' '}
               <span className="font-brush text-4xl font-normal text-gold sm:text-5xl">
-                Amazonas
+                Manaus
               </span>
             </h2>
             <p className="mt-4 text-white/70">

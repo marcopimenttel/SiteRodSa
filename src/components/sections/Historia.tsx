@@ -156,8 +156,8 @@ export function Historia() {
 
           <Reveal delay={0.1}>
             <div className="overflow-hidden rounded-[1.75rem] border border-white/80 bg-white shadow-[0_20px_60px_rgba(0,26,77,0.1)]">
-              {/* Header do container — fundo azul + logo */}
-              <div className="flex items-center bg-[#021c4f] px-5 py-4 sm:px-8 sm:py-5">
+              {/* Header do container — fundo azul + logo centralizada */}
+              <div className="flex items-center justify-center bg-[#021c4f] px-5 py-4 sm:px-8 sm:py-5">
                 <BrandLogo
                   variant="branco"
                   className="h-10 w-auto max-w-[min(80%,320px)] sm:h-12 sm:max-w-[360px]"

@@ -52,6 +52,42 @@ const heroSocials = [
   },
 ] as const
 
+function SocialButton({
+  nome,
+  href,
+  active,
+  Icon,
+  size,
+}: {
+  nome: string
+  href?: string
+  active: boolean
+  Icon: (typeof heroSocials)[number]['icon']
+  size: 'desktop' | 'mobile'
+}) {
+  return (
+    <a
+      href={active && href ? href : undefined}
+      target={active ? '_blank' : undefined}
+      rel={active ? 'noreferrer' : undefined}
+      aria-label={nome}
+      onClick={(e) => {
+        if (!active) {
+          e.preventDefault()
+          toast.message(`${nome} em breve`)
+        }
+      }}
+      className={
+        size === 'desktop'
+          ? 'inline-flex h-14 w-14 items-center justify-center rounded-xl bg-[#fdb814] text-[#021c4f] shadow-md transition hover:scale-105 hover:bg-[#ffc933] sm:h-16 sm:w-16 lg:h-[4.5rem] lg:w-[4.5rem]'
+          : 'inline-flex h-10 w-10 items-center justify-center rounded-lg bg-[#fdb814] text-[#021c4f] shadow-md transition hover:scale-105 hover:bg-[#ffc933] sm:h-11 sm:w-11'
+      }
+    >
+      <Icon className={size === 'desktop' ? 'h-7 w-7 sm:h-8 sm:w-8' : 'h-5 w-5'} />
+    </a>
+  )
+}
+
 export function Hero() {
   return (
     <section
@@ -59,7 +95,7 @@ export function Hero() {
       className="relative flex min-h-[100svh] flex-col overflow-hidden text-white lg:block"
       style={{ backgroundColor: '#021c4f' }}
     >
-      {/* Textura 3D suave no fundo */}
+      {/* Base azul + Teatro Amazonas com fade direita → esquerda */}
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
         <div
           className="absolute inset-0"
@@ -67,135 +103,97 @@ export function Hero() {
             background: `
               radial-gradient(ellipse 70% 55% at 78% 42%, rgba(55, 110, 200, 0.35) 0%, transparent 58%),
               radial-gradient(ellipse 55% 45% at 18% 70%, rgba(8, 40, 110, 0.7) 0%, transparent 55%),
-              radial-gradient(ellipse 40% 35% at 55% 15%, rgba(253, 184, 20, 0.08) 0%, transparent 50%),
               radial-gradient(circle at 50% 50%, #042a6e 0%, #021c4f 55%, #011233 100%)
             `,
           }}
         />
-        <div
-          className="absolute -right-[10%] top-[8%] h-[70vmin] w-[70vmin] rounded-full opacity-40 blur-3xl"
-          style={{
-            background:
-              'radial-gradient(circle at 35% 35%, rgba(120, 170, 255, 0.45) 0%, rgba(20, 70, 160, 0.2) 40%, transparent 70%)',
-          }}
-        />
-        <div
-          className="absolute -left-[15%] bottom-[-10%] h-[55vmin] w-[55vmin] rounded-full opacity-50 blur-3xl"
-          style={{
-            background:
-              'radial-gradient(circle at 60% 40%, rgba(30, 80, 180, 0.5) 0%, rgba(2, 28, 79, 0) 70%)',
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-[0.07]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)
-            `,
-            backgroundSize: '48px 48px',
-            maskImage:
-              'radial-gradient(ellipse 80% 70% at 50% 45%, black 20%, transparent 75%)',
-            WebkitMaskImage:
-              'radial-gradient(ellipse 80% 70% at 50% 45%, black 20%, transparent 75%)',
-          }}
-        />
+        <div className="absolute inset-0">
+          <img
+            src="/images/teatroam.webp"
+            alt=""
+            className="h-full w-full object-cover object-center"
+            fetchPriority="high"
+          />
+          {/* Mais visível à direita (atrás do vereador), some à esquerda */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(to left, rgba(2,28,79,0.15) 0%, rgba(2,28,79,0.45) 35%, rgba(2,28,79,0.82) 68%, #021c4f 100%)',
+            }}
+          />
+        </div>
       </div>
 
-      {/* Nome contorno — atrás da foto e do conteúdo */}
+      {/* Nome contorno — por cima do Teatro, atrás da foto */}
       <HeroNameBackdrop />
 
-      {/*
-        AJUSTES DA FOTO (desktop — prefixo lg:):
-        - w-[56%] ................. largura da área
-        - lg:scale-112 ............ zoom (↑ aproxima | ↓ afasta)
-        - lg:translate-y-[10%] .... desce a foto (↑ % = desce mais | -translate-y sobe)
-        - lg:origin-bottom ........ cresce a partir de baixo (encosta no rodapé)
-        - object-[center_8%] ...... foco do rosto no crop
-        Mobile: foto fica no rodapé do hero (order-last + mt-auto)
-      */}
+      {/* Foto — mobile: centralizada e grande; desktop: direita */}
       <motion.div
         initial={{ opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.9, delay: 0.25, ease: easeOut }}
-        className="pointer-events-none relative order-last z-[1] mt-auto w-full max-lg:mx-auto max-lg:flex max-lg:w-[115%] max-lg:max-w-none max-lg:items-end max-lg:justify-center lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:w-[56%]"
+        className="pointer-events-none relative z-[1] flex flex-1 items-end justify-center max-lg:min-h-0 max-lg:pt-16 max-lg:pb-20 lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:w-[56%] lg:items-stretch lg:justify-start lg:pb-0 lg:pt-0"
       >
         <img
           src="/images/hero-foto.png?v=3"
           alt="Rodrigo Sá — Vereador de Manaus"
-          className="relative z-10 mx-auto h-auto w-full max-w-[520px] scale-110 object-contain object-bottom sm:max-w-[560px] lg:mx-0 lg:h-full lg:max-w-none lg:w-full lg:origin-bottom lg:translate-y-[10%] lg:scale-100 lg:object-cover lg:object-[center_8%]"
+          className="relative z-10 mx-auto h-auto w-[92%] max-w-[640px] scale-110 object-contain object-bottom sm:w-[88%] sm:max-w-[700px] lg:mx-0 lg:h-full lg:w-full lg:max-w-none lg:origin-bottom lg:translate-y-[10%] lg:scale-100 lg:object-cover lg:object-[center_8%]"
           fetchPriority="high"
         />
       </motion.div>
 
-      {/* Conteúdo tipográfico */}
-      <div className="relative z-10 order-first mx-auto flex w-full max-w-[1400px] flex-1 items-start px-4 pb-2 pt-14 sm:px-6 lg:min-h-[100svh] lg:items-center lg:px-8 lg:pb-16 lg:pt-20">
-        <div className="w-full max-w-xl lg:max-w-[48%]">
-          {/* Logo — entrada + leve pulso contínuo */}
-          <motion.div
-            initial={{ opacity: 0, y: 28, scale: 0.94 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.75, ease: easeOut }}
-            className="origin-left"
-          >
-            <motion.img
-              src="/images/logo-vereador-branco.svg"
-              alt="Rodrigo Sá — Vereador de Manaus"
-              className="h-auto w-full max-w-[980px] origin-left object-contain object-left"
-              fetchPriority="high"
-              animate={{ scale: [1, 1.035, 1] }}
-              transition={{
-                duration: 3.8,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                delay: 0.9,
-              }}
-            />
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.18, ease: easeOut }}
-            className="mt-3 font-display text-lg font-semibold tracking-wide text-[#fdb814] sm:mt-4 sm:text-xl lg:mt-5 lg:text-2xl"
-          >
-            Vereador de Manaus
-          </motion.p>
-
-          {/* Redes — no mobile sobem junto, com folga acima da foto */}
+      {/* Redes desktop — grid 3×2 à esquerda */}
+      <div className="pointer-events-none relative z-10 mx-auto hidden w-full max-w-[1400px] lg:absolute lg:inset-0 lg:mx-auto lg:block lg:px-8">
+        <div className="flex h-full max-w-[48%] items-center">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.35, ease: easeOut }}
-            className="mt-2 mb-6 flex flex-wrap items-center justify-center gap-2.5 sm:mt-3 sm:mb-0 sm:gap-4 lg:mt-8 lg:justify-start"
+            className="pointer-events-auto grid grid-cols-3 gap-3 xl:gap-4"
           >
             {heroSocials.map((rede) => {
-              const Icon = rede.icon
               const href = rede.url()
               const active = rede.ready() && Boolean(href)
-
               return (
-                <a
+                <SocialButton
                   key={rede.nome}
-                  href={active ? href : undefined}
-                  target={active ? '_blank' : undefined}
-                  rel={active ? 'noreferrer' : undefined}
-                  aria-label={rede.nome}
-                  onClick={(e) => {
-                    if (!active) {
-                      e.preventDefault()
-                      toast.message(`${rede.nome} em breve`)
-                    }
-                  }}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:scale-110 hover:border-[#fdb814] hover:bg-[#fdb814] hover:text-[#021c4f] sm:h-14 sm:w-14"
-                >
-                  <Icon className="h-5 w-5 sm:h-7 sm:w-7" />
-                </a>
+                  nome={rede.nome}
+                  href={href}
+                  active={active}
+                  Icon={rede.icon}
+                  size="desktop"
+                />
               )
             })}
           </motion.div>
         </div>
       </div>
+
+      {/* Redes mobile — uma linha no rodapé */}
+      <motion.div
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.65, delay: 0.35, ease: easeOut }}
+        className="absolute inset-x-0 bottom-4 z-20 flex justify-center px-3 lg:hidden"
+      >
+        <div className="flex items-center justify-center gap-2 sm:gap-2.5">
+          {heroSocials.map((rede) => {
+            const href = rede.url()
+            const active = rede.ready() && Boolean(href)
+            return (
+              <SocialButton
+                key={rede.nome}
+                nome={rede.nome}
+                href={href}
+                active={active}
+                Icon={rede.icon}
+                size="mobile"
+              />
+            )
+          })}
+        </div>
+      </motion.div>
     </section>
   )
 }
