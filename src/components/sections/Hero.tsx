@@ -128,21 +128,19 @@ export function Hero() {
       <HeroNameBackdrop />
 
       {/*
-        Foto:
-        - Mobile: ocupa quase toda a altura útil (sob o header), sobe para fechar o vão acima da cabeça
-        - Desktop: coluna direita
-        - Ícones ficam em z maior — por cima da foto, sem “cortar” com padding
+        Foto mobile: grande, com respiro elegante sob o header (sem cortar a cabeça).
+        Desktop: coluna direita. Ícones em z maior, por cima da foto.
       */}
       <motion.div
         initial={{ opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.9, delay: 0.25, ease: easeOut }}
-        className="pointer-events-none absolute inset-x-0 bottom-0 top-14 z-[1] flex items-end justify-center sm:top-16 lg:inset-y-0 lg:left-auto lg:right-0 lg:top-0 lg:w-[56%] lg:items-stretch lg:justify-start"
+        className="pointer-events-none absolute inset-x-0 bottom-0 top-14 z-[1] flex items-end justify-center pt-3 sm:top-16 sm:pt-4 lg:inset-y-0 lg:left-auto lg:right-0 lg:top-0 lg:w-[56%] lg:items-stretch lg:justify-start lg:pt-0"
       >
         <img
           src="/images/hero-foto.png?v=3"
           alt="Rodrigo Sá — Vereador de Manaus"
-          className="relative z-10 h-full w-auto max-w-none scale-[1.28] object-contain object-bottom sm:scale-[1.22] lg:mx-0 lg:h-full lg:w-full lg:max-w-none lg:origin-bottom lg:translate-y-[10%] lg:scale-100 lg:object-cover lg:object-[center_8%]"
+          className="relative z-10 h-full max-h-full w-auto max-w-[118%] origin-bottom scale-[1.12] object-contain object-bottom sm:max-w-[112%] sm:scale-[1.08] lg:mx-0 lg:h-full lg:w-full lg:max-w-none lg:origin-bottom lg:translate-y-[10%] lg:scale-100 lg:object-cover lg:object-[center_8%]"
           fetchPriority="high"
         />
       </motion.div>
